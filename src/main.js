@@ -196,7 +196,8 @@ const {
   interactables,
   visited,
   agentPositionClear,
-  openAtlas
+  openAtlas,
+  completeMission
 });
 
 notebookController = createNotebookController({
@@ -573,6 +574,7 @@ function closeAtlas() { return notebookController.close(); }
 function resetRevealHold() { return notebookController.resetRevealHold(); }
 function startRevealHold() { return notebookController.startRevealHold(); }
 function updateProgress() { return notebookController.updateProgress(); }
+function completeMission() { return notebookController.completeMission(); }
 
 function applyInspectionPosition() {
   const inspectionParams = new URLSearchParams(location.search);

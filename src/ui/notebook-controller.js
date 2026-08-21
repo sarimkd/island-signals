@@ -22,6 +22,7 @@ export function createNotebookController({
   let selectedTerritory = "Fiji";
   let selectedNotebookPage = 0;
   let guidedNotebookItem = null;
+  let missionComplete = false;
   let notebookZoom = 1.1;
   let pageTurnTimer = 0;
   let revealHoldStartedAt = 0;
@@ -113,7 +114,9 @@ export function createNotebookController({
   
   function updateProgress() {
     dom.progressCount.textContent = `${visited.size} of 4 records`;
-    dom.questCopy.textContent = visited.size === STATIONS.length ? "return to professor piko" : "find the four field guides";
+    dom.questCopy.textContent = missionComplete
+      ? "investigation complete · read the conclusion"
+      : visited.size === STATIONS.length ? "return to professor piko" : "find the four field guides";
     [...dom.progressDots.children].forEach((dot) => dot.classList.toggle("is-visited", visited.has(dot.dataset.station)));
   }
   
@@ -440,6 +443,11 @@ export function createNotebookController({
   dom.territoryPrev.addEventListener("click", () => dom.territoryTabs.scrollBy({ left: -Math.max(220, dom.territoryTabs.clientWidth * .72), behavior: "smooth" }));
   dom.territoryNext.addEventListener("click", () => dom.territoryTabs.scrollBy({ left: Math.max(220, dom.territoryTabs.clientWidth * .72), behavior: "smooth" }));
   dom.territoryTabs.addEventListener("scroll", updateTerritoryScrollButtons, { passive: true });
+
+  function completeMission() {
+    missionComplete = true;
+    updateProgress();
+  }
   updateNotebookZoom(0);
 
   return {
@@ -450,5 +458,6 @@ export function createNotebookController({
     updateProgress,
     isOpen: () => dom.atlas.classList.contains("is-visible"),
     getSelectedStation: () => selectedStation,
+    completeMission,
   };
 }

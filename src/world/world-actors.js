@@ -21,8 +21,11 @@ export function createWorldActors({
   notebook,
   OCEAN_WATER_Y,
   watercraftActors,
-  agentPositionClear
+  agentPositionClear,
+  openAtlas,
+  completeMission
 }) {
+  let professorConversationComplete = false;
   function randomAnimalTarget(agent) {
     if (agent.patrol?.length) {
       agent.patrolIndex = (agent.patrolIndex + 1) % agent.patrol.length;
@@ -221,12 +224,13 @@ export function createWorldActors({
       notebookRound: 1,
       notebookEntry: { id: "professor-piko", chapter: "conclusion", kind: "research", name: "Professor Piko Puddlejump", role: "field survey lead", text: "Ask which directions are shared across territories and which patterns remain local." },
       getConversation: (round) => {
-        if (round >= 3) return [{ speaker: "Professor Piko Puddlejump", text: visited.size === STATIONS.length ? "Put the four records side by side. Answer the question we began with." : "Keep exploring. You still need the four directions before you can compare them." }];
+        if (professorConversationComplete) return [{ speaker: "Professor Piko Puddlejump", text: "The conclusion is in your notebook. I am officially returning to my clipboard." }];
         if (visited.size === STATIONS.length) return [
-          { speaker: "Professor Piko Puddlejump", text: "Four field notes and only moderate animal gossip. What is your answer?" },
-          { speaker: PLAYER_NAME, text: "Land temperature, sea-surface temperature and sea level share an upward direction. Rainfall splits, while biodiversity risk shows a separate broad pattern." },
-          { speaker: "Professor Piko Puddlejump", text: "Good. The Pacific picture is connected, but planning cannot be identical everywhere. Write that plainly." },
+          { speaker: "Professor Piko Puddlejump", text: "You have all four records. Open the notebook and put the evidence beside the conclusion." },
+          { speaker: PLAYER_NAME, text: "I found a shared physical direction, but rainfall and biodiversity still need their own reading." },
+          { speaker: "Professor Piko Puddlejump", text: "Exactly. The answer is not one Pacific average. Read the conclusion, then decide what should be shared and what must stay local." },
         ];
+        if (round >= 3) return [{ speaker: "Professor Piko Puddlejump", text: visited.size === STATIONS.length ? "Put the four records side by side. Answer the question we began with." : "Keep exploring. You still need the four directions before you can compare them." }];
         const reminders = ["Find Dr. Afi, Sela, Officer Noa and Litia. Each answers one part of our main question.", "Compare directions before interpretations. Rainfall may not follow the land and ocean pattern.", "Talk to the village too. Each person and animal adds one practical observation to your notebook.", "Keep exploring. The answer appears only when the four records sit beside one another."];
         const replies = ["I will begin with the land record.", "I am checking agreement first and differences second.", "I will ask what each pattern looks like in daily village life.", "I am close. I still need to compare the chapters directly."];
         return [
@@ -234,6 +238,13 @@ export function createWorldActors({
           { speaker: PLAYER_NAME, text: replies[round] },
           { speaker: "Professor Piko Puddlejump", text: "Excellent. My clipboard and I will continue looking professionally concerned." },
         ];
+      },
+      onComplete: (finished) => {
+        if (visited.size !== STATIONS.length) return;
+        professorConversationComplete = true;
+        finished.item.interactionDisabled = true;
+        completeMission();
+        openAtlas("conclusion", { page: 0 });
       },
     });
     return actor;

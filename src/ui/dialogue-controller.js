@@ -145,6 +145,7 @@ export function createDialogueController({
     let nearestDistance = Infinity;
     let callingDistance = Infinity;
     interactables.forEach((item) => {
+      if (item.interactionDisabled) return;
       const dx = player.position.x - item.root.position.x;
       const dz = player.position.z - item.root.position.z;
       const distance = Math.hypot(dx, dz);
