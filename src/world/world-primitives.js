@@ -173,13 +173,14 @@ export function createWorldPrimitives({
     return new THREE.MeshStandardMaterial({ map: texture, color: 0xffffff, roughness: 1 });
   }
   
-  function createWaterMaterial(baseColor, lineColor) {
+  function createWaterMaterial(baseColor, lineColor, waveScale = 1) {
     const material = new THREE.ShaderMaterial({
       transparent: false,
       uniforms: {
         uTime: { value: 0 },
         uBase: { value: new THREE.Color(baseColor) },
         uLine: { value: new THREE.Color(lineColor) },
+        uWaveScale: { value: waveScale },
       },
       vertexShader: `
         varying vec2 vUv;
@@ -190,13 +191,14 @@ export function createWorldPrimitives({
       `,
       fragmentShader: `
         uniform float uTime;
+        uniform float uWaveScale;
         uniform vec3 uBase;
         uniform vec3 uLine;
         varying vec2 vUv;
         void main() {
-          float bend = sin(vUv.y * 28.0 - uTime * 0.85) * 0.035;
-          float wave = sin((vUv.x + bend) * 44.0 + uTime * 1.25);
-          float fineWave = sin(vUv.y * 64.0 - uTime * 1.6) * 0.25;
+          float bend = sin(vUv.y * 28.0 * uWaveScale - uTime * 0.85) * 0.035;
+          float wave = sin((vUv.x + bend) * 44.0 * uWaveScale + uTime * 1.25);
+          float fineWave = sin(vUv.y * 64.0 * uWaveScale - uTime * 1.6) * 0.25;
           float crest = smoothstep(0.7, 0.94, wave + fineWave);
           float vignette = 1.0 - distance(vUv, vec2(0.5)) * 0.12;
           gl_FragColor = vec4(mix(uBase, uLine, crest * 0.48) * vignette, 1.0);
@@ -255,7 +257,17 @@ export function createWorldPrimitives({
           rail.rotation.y = angle;
           world.add(rail);
         });
-        addColliderSegment([x0, z0], [x1, z1], .3, 1.25);
+        // Pull collision slightly away from each post. The visible fence stays
+        // connected, while openings and corners no longer catch the player.
+        const colliderInset = Math.min(.14, segmentLength * .12);
+        const ux = (x1 - x0) / segmentLength;
+        const uz = (z1 - z0) / segmentLength;
+        addColliderSegment(
+          [x0 + ux * colliderInset, z0 + uz * colliderInset],
+          [x1 - ux * colliderInset, z1 - uz * colliderInset],
+          .28,
+          1.25,
+        );
       }
     }
   }

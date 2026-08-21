@@ -73,7 +73,12 @@ manager.onError = (url) => console.warn(`Could not load asset: ${url}`);
 
 const renderer = new THREE.WebGLRenderer({ canvas: dom.canvas, antialias: true, powerPreference: "high-performance" });
 const lowPower = matchMedia("(max-width: 700px)").matches || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
-renderer.setPixelRatio(Math.min(devicePixelRatio || 1, lowPower ? 1.2 : 1.5));
+function preferredPixelRatio() {
+  const pixelBudget = lowPower ? 1800000 : 2800000;
+  const areaLimit = Math.sqrt(pixelBudget / Math.max(innerWidth * innerHeight, 1));
+  return Math.max(.8, Math.min(devicePixelRatio || 1, lowPower ? 1 : 1.25, areaLimit));
+}
+renderer.setPixelRatio(preferredPixelRatio());
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = .98;
@@ -508,6 +513,8 @@ function updateWorldBubbles() { return dialogueController.updateWorldBubbles(); 
 function updateStationLabels() { return dialogueController.updateStationLabels(); }
 let previousTime = performance.now();
 let lastRender = 0;
+let simulationAccumulator = 0;
+let lastInterfaceUpdate = 0;
 function animate(time) {
   requestAnimationFrame(animate);
   if (document.hidden) return;
@@ -518,20 +525,28 @@ function animate(time) {
   lastRender = time;
   updatePlayer(delta);
   mixers.forEach((mixer) => mixer.update(delta));
-  updateAnimals(delta, time);
+  simulationAccumulator += delta;
+  if (simulationAccumulator >= 1 / 30) {
+    updateAnimals(Math.min(simulationAccumulator, .05), time);
+    simulationAccumulator = 0;
+  }
   updateWatercraft(time);
   updateEnvironment(delta, time);
   updateCamera(delta);
   updateStations(time);
-  updateInteractions(time);
-  updateWorldBubbles();
-  updateStationLabels();
+  if (time - lastInterfaceUpdate >= 1000 / 30) {
+    updateInteractions(time);
+    updateWorldBubbles();
+    updateStationLabels();
+    lastInterfaceUpdate = time;
+  }
   renderer.render(scene, camera);
 }
 
 function resize() {
   const width = innerWidth;
   const height = innerHeight;
+  renderer.setPixelRatio(preferredPixelRatio());
   camera.aspect = width / Math.max(height, 1);
   camera.updateProjectionMatrix();
   renderer.setSize(width, height, false);

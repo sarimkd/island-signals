@@ -71,8 +71,8 @@ export function createVillageBuilder({
     scene.background = sky;
   
     const water = new THREE.Mesh(
-      new THREE.CircleGeometry(125, 80),
-      createWaterMaterial(0x70bfcb, 0xe0f6f0),
+      new THREE.CircleGeometry(125, lowPower ? 48 : 64),
+      createWaterMaterial(0x69b9c5, 0xe0f6ee, 3.5),
     );
     water.rotation.x = -Math.PI / 2;
     water.position.y = OCEAN_WATER_Y;
@@ -133,7 +133,7 @@ export function createVillageBuilder({
       placeModel(index % 3 === 0 ? assets.cropPumpkin : index % 3 === 1 ? assets.cropCorn : assets.cropCarrot, { size: 1.05, x, z, rotation: index * .25, castShadow: false }));
   
     addConnectedFence([[-1,-25],[-7,-22],[-12,-17],[-12,-13]], { color: 0x8c623f });
-    addConnectedFence([[5,-23],[1,-18],[-3,-14],[-3,-11]], { color: 0x8c623f });
+    addConnectedFence([[6.5,-22.7],[1,-18],[-3,-14],[-3,-11]], { color: 0x8c623f });
     addConnectedFence([[3,-10],[8,-11],[13,-8],[14,-4]], { color: 0x8c623f });
     addConnectedFence([[12,-1],[11,1.5]], { color: 0x8c623f });
     addConnectedFence([[-13,18],[-11,21],[-7,23]], { color: 0x8c623f });

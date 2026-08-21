@@ -240,10 +240,11 @@ export function createWorldActors({
   }
   
   function placeWatercraft(gltf, options) {
-    const draft = options.draft ?? THREE.MathUtils.clamp(options.size * .11, .28, 1.05);
-    const model = placeModel(gltf, { size: options.size, x: options.x, y: options.y ?? OCEAN_WATER_Y - draft, z: options.z, rotation: options.rotation || 0, castShadow: false, receiveShadow: false });
+    const model = placeModel(gltf, { size: options.size, x: options.x, y: options.y ?? OCEAN_WATER_Y, z: options.z, rotation: options.rotation || 0, castShadow: false, receiveShadow: false });
     const box = new THREE.Box3().setFromObject(model);
     const footprint = box.getSize(new THREE.Vector3());
+    const draft = options.draft ?? THREE.MathUtils.clamp(footprint.y * .11, .18, .55);
+    if (options.y == null) model.position.y = OCEAN_WATER_Y - draft;
     const clearance = Math.max(1.1, Math.max(footprint.x, footprint.z) * .42);
     const insideCoast = (x, z) => pointInIsland(x / 1.09, z / 1.09);
     for (let attempt = 0; attempt < 18; attempt += 1) {
