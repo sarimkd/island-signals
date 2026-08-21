@@ -534,9 +534,11 @@ function animate(time) {
   updateEnvironment(delta, time);
   updateCamera(delta);
   updateStations(time);
+  // Screen-attached bubbles must follow the camera every rendered frame.
+  // Proximity checks and station-label bookkeeping can remain throttled.
+  updateWorldBubbles();
   if (time - lastInterfaceUpdate >= 1000 / 30) {
     updateInteractions(time);
-    updateWorldBubbles();
     updateStationLabels();
     lastInterfaceUpdate = time;
   }
