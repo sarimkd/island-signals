@@ -16,10 +16,12 @@ import { createNotebookController } from "./ui/notebook-controller.js";
 import { createDialogueController } from "./ui/dialogue-controller.js";
 import { queryAppDom } from "./core/dom.js";
 import { createInputController } from "./core/input-controller.js";
+import { createMusicController } from "./core/music-controller.js";
 
 const [DATA, CLIMATE] = await window.PACIFIC_DATA_PROMISE;
 
 const dom = queryAppDom();
+createMusicController({ button: document.querySelector("#music-toggle") });
 
 const {
   territories,
@@ -213,6 +215,7 @@ notebookController = createNotebookController({
   renderNotebookDetail,
   showLayer,
   startDialogue,
+  playGuideGesture,
 });
 
 function setPlayerAction(name) {
@@ -253,6 +256,7 @@ const bubbleProjected = new THREE.Vector3();
 const bubbleAnchor = new THREE.Vector3();
 const cameraState = {
   yaw: Math.PI * .22,
+  yawTarget: Math.PI * .22,
   distance: 9.9,
   height: 6.55,
 };
@@ -297,7 +301,7 @@ function updatePlayer(delta) {
   moveRight.set(Math.cos(cameraState.yaw), 0, -Math.sin(cameraState.yaw));
   moveDirection.copy(moveForward).multiplyScalar(vertical).addScaledVector(moveRight, horizontal);
   const moving = moveDirection.lengthSq() > 0;
-  const running = keyState.has("shift");
+  const running = keyState.has("shift") || touchState.has("shift");
   if (moving) {
     moveDirection.normalize();
     const speed = running ? 8.1 : 4.6;
@@ -346,6 +350,7 @@ function updateCamera(delta) {
   cameraTarget.copy(worldStarted ? player.position : worldOrigin);
   cameraTarget.y = 1.05;
   cameraFocus.lerp(cameraTarget, 1 - Math.exp(-3.8 * delta));
+  cameraState.yaw = dampAngle(cameraState.yaw, cameraState.yawTarget, 5.5, delta);
   cameraOffset.set(Math.sin(cameraState.yaw) * cameraState.distance, cameraState.height, Math.cos(cameraState.yaw) * cameraState.distance);
   cameraPosition.copy(cameraFocus).add(cameraOffset);
   camera.position.lerp(cameraPosition, 1 - Math.exp(-4.5 * delta));
@@ -509,7 +514,7 @@ function closeDialogue(...args) { return dialogueController.close(...args); }
 function advanceDialogue() { return dialogueController.advance(); }
 function interactWithNearest() { return dialogueController.interactWithNearest(); }
 function updateInteractions(time) { return dialogueController.updateInteractions(time); }
-function updateWorldBubbles() { return dialogueController.updateWorldBubbles(); }
+function updateWorldBubbles(delta) { return dialogueController.updateWorldBubbles(delta); }
 function updateStationLabels() { return dialogueController.updateStationLabels(); }
 let previousTime = performance.now();
 let lastRender = 0;
@@ -536,7 +541,7 @@ function animate(time) {
   updateStations(time);
   // Screen-attached bubbles must follow the camera every rendered frame.
   // Proximity checks and station-label bookkeeping can remain throttled.
-  updateWorldBubbles();
+  updateWorldBubbles(delta);
   if (time - lastInterfaceUpdate >= 1000 / 30) {
     updateInteractions(time);
     updateStationLabels();
@@ -602,8 +607,12 @@ function beginWorld() {
       { speaker: "Professor Piko Puddlejump", text: "Exactly. Dr. Afi has land temperature, Sela has two ocean measures, Officer Noa has rainfall and Litia has the Red List Index." },
       { speaker: "Professor Piko Puddlejump", text: "Meet all four, then listen to the rest of the village. Every person and animal sees one small part of how regional patterns meet daily life." },
       { speaker: PLAYER_NAME, text: "I will keep the measures separate, compare their directions and return with one clear answer." },
-    ], false), 380);
+    ], false, () => turnCameraBehindPlayer()), 380);
   }
+}
+
+function turnCameraBehindPlayer() {
+  cameraState.yawTarget = player.rotation.y + Math.PI;
 }
 
 createInputController({

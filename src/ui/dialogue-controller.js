@@ -1,3 +1,5 @@
+import { dampAngle } from "../core/math.js";
+
 export function createDialogueController({
   THREE,
   dom,
@@ -112,8 +114,8 @@ export function createDialogueController({
     activeDialogue = { item, lines: lines || item.getConversation(round), index: 0, round, completion };
     const dx = item.root.position.x - player.position.x;
     const dz = item.root.position.z - player.position.z;
-    player.rotation.y = Math.atan2(dx, dz);
-    if (item.root) item.root.rotation.y = Math.atan2(-dx, -dz);
+    activeDialogue.playerFacing = Math.atan2(dx, dz);
+    activeDialogue.actorFacing = Math.atan2(-dx, -dz);
     dom.dialogue.classList.add("is-visible");
     dom.dialogue.setAttribute("aria-hidden", "false");
     renderDialogueLine();
@@ -178,8 +180,10 @@ export function createDialogueController({
     }
   }
   
-  function updateWorldBubbles() {
+  function updateWorldBubbles(delta = 1 / 60) {
     if (activeDialogue) {
+      player.rotation.y = dampAngle(player.rotation.y, activeDialogue.playerFacing, 13, delta);
+      if (activeDialogue.item.root) activeDialogue.item.root.rotation.y = dampAngle(activeDialogue.item.root.rotation.y, activeDialogue.actorFacing, 13, delta);
       const line = activeDialogue.lines[activeDialogue.index];
       const root = line.speaker === PLAYER_NAME ? player : activeDialogue.item.root;
       root.getWorldPosition(bubbleAnchor);

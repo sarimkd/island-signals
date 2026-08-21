@@ -70,16 +70,22 @@ export function createInputController({
 
   let cameraDragging = false;
   let previousPointerX = 0;
+  let previousPointerY = 0;
   dom.canvas.addEventListener("pointerdown", (event) => {
-    if (!isWorldStarted() || overlayOpen() || event.pointerType === "touch") return;
+    if (!isWorldStarted() || overlayOpen()) return;
     cameraDragging = true;
     previousPointerX = event.clientX;
+    previousPointerY = event.clientY;
     dom.canvas.setPointerCapture(event.pointerId);
   });
   dom.canvas.addEventListener("pointermove", (event) => {
     if (!cameraDragging) return;
     cameraState.yaw -= (event.clientX - previousPointerX) * .006;
+    cameraState.yawTarget = cameraState.yaw;
+    cameraState.distance = THREE.MathUtils.clamp(cameraState.distance + (event.clientY - previousPointerY) * .018, 8.5, 17);
+    cameraState.height = THREE.MathUtils.lerp(6.2, 10.2, (cameraState.distance - 8.5) / 8.5);
     previousPointerX = event.clientX;
+    previousPointerY = event.clientY;
   });
   dom.canvas.addEventListener("pointerup", (event) => {
     cameraDragging = false;
@@ -107,13 +113,44 @@ export function createInputController({
   document.querySelector("#touch-jump").addEventListener("click", startJump);
   dom.interactionPrompt.addEventListener("click", interactWithNearest);
   dom.dialogueNext.addEventListener("click", advanceDialogue);
-  document.querySelectorAll("[data-move]").forEach((button) => {
-    const direction = button.dataset.move;
-    const start = (event) => { event.preventDefault(); touchState.add(direction); };
-    const stop = (event) => { event.preventDefault(); touchState.delete(direction); };
-    button.addEventListener("pointerdown", start);
-    button.addEventListener("pointerup", stop);
-    button.addEventListener("pointercancel", stop);
-    button.addEventListener("pointerleave", stop);
+  const joystick = document.querySelector("#touch-joystick");
+  const knob = document.querySelector("#joystick-knob");
+  let joystickPointerId = null;
+  const clearJoystick = () => {
+    ["up", "down", "left", "right"].forEach((direction) => touchState.delete(direction));
+    knob.style.transform = "translate(-50%, -50%)";
+    joystickPointerId = null;
+  };
+  const moveJoystick = (event) => {
+    if (joystickPointerId !== event.pointerId) return;
+    const bounds = joystick.getBoundingClientRect();
+    const radius = bounds.width * .34;
+    const centerX = bounds.left + bounds.width / 2;
+    const centerY = bounds.top + bounds.height / 2;
+    const dx = event.clientX - centerX;
+    const dy = event.clientY - centerY;
+    const length = Math.hypot(dx, dy);
+    const scale = Math.min(1, radius / Math.max(length, 1));
+    const x = dx * scale;
+    const y = dy * scale;
+    knob.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
+    ["up", "down", "left", "right"].forEach((direction) => touchState.delete(direction));
+    if (Math.abs(x) > radius * .2) touchState.add(x < 0 ? "left" : "right");
+    if (Math.abs(y) > radius * .2) touchState.add(y < 0 ? "up" : "down");
+  };
+  joystick.addEventListener("pointerdown", (event) => {
+    event.preventDefault();
+    joystickPointerId = event.pointerId;
+    joystick.setPointerCapture(event.pointerId);
+    moveJoystick(event);
   });
+  joystick.addEventListener("pointermove", moveJoystick);
+  joystick.addEventListener("pointerup", clearJoystick);
+  joystick.addEventListener("pointercancel", clearJoystick);
+  const runButton = document.querySelector("#touch-run");
+  const startRun = (event) => { event.preventDefault(); touchState.add("shift"); runButton.setPointerCapture(event.pointerId); };
+  const stopRun = (event) => { event.preventDefault(); touchState.delete("shift"); };
+  runButton.addEventListener("pointerdown", startRun);
+  runButton.addEventListener("pointerup", stopRun);
+  runButton.addEventListener("pointercancel", stopRun);
 }

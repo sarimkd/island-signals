@@ -273,7 +273,7 @@ export function createVillageBuilder({
         notebookRound: 0,
         notebookEntry: { id: `guide-${station.id}`, chapter: station.id, kind: station.id, name: station.guide, role: station.role, text: station.lead },
         getConversation: (round) => guideConversation(station, round),
-        onComplete: (finished) => openAtlas(station.id, { unlock: true, guidedBy: finished.item }),
+        onComplete: (finished) => openAtlas(station.id, { unlock: true, guidedBy: finished.item, page: 1 }),
       });
       placeModel(index % 2 ? assets.bench : assets.lantern, { size: 1.8, x: station.position.x + 2.1, z: station.position.z + .7, rotation: index * .7 });
       stationAnchors.set(station.id, new THREE.Vector3(station.position.x, groundHeight(station.position.x, station.position.z) + 2.8, station.position.z));

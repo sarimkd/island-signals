@@ -13,7 +13,8 @@ export function createNotebookController({
   renderHorizontalBarChart,
   renderNotebookDetail,
   showLayer,
-  startDialogue
+  startDialogue,
+  playGuideGesture
 }) {
   let selectedStation = "land";
   let selectedMetric = "landTemp";
@@ -78,7 +79,8 @@ export function createNotebookController({
     }
     selectedStation = stationId;
     guidedNotebookItem = options.guidedBy || null;
-    if (stationChanged || options.guidedBy) selectedNotebookPage = 0;
+    if (stationChanged || options.guidedBy) selectedNotebookPage = Number.isInteger(options.page) ? options.page : 0;
+    if (Number.isInteger(options.page)) selectedNotebookPage = THREE.MathUtils.clamp(options.page, 0, 2);
     if (chapterChanged) {
       const spread = dom.notebookCard.querySelector(".atlas-layout");
       if (spread) spread.scrollTop = 0;

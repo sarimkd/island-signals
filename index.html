@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Kalam:wght@400;700&family=Patrick+Hand&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles/base.css?v=ui-4" />
+    <link rel="stylesheet" href="styles/base.css?v=ui-5" />
     <link rel="stylesheet" href="styles/components/dialogue.css?v=5" />
     <link rel="stylesheet" href="styles/components/notebook.css?v=draft-9" />
     <script type="importmap">
@@ -41,7 +41,8 @@
         <nav class="hud-actions" aria-label="Story controls">
           <button class="hud-button" id="help-button" type="button"><span aria-hidden="true">?</span>how to explore</button>
           <button class="hud-button hud-button-primary" id="atlas-button" type="button"><span aria-hidden="true">▤</span>field notebook</button>
-          <button class="hud-icon-button" id="credits-button" type="button" aria-label="Information and credits">i</button>
+          <button class="hud-icon-button" id="music-toggle" type="button" aria-label="turn music on" aria-pressed="false">♪</button>
+          <button class="hud-icon-button" id="credits-button" type="button" aria-label="information and credits">i</button>
         </nav>
       </header>
 
@@ -66,13 +67,15 @@
         <button id="dialogue-next" type="button" aria-label="next line"><span aria-hidden="true">next</span></button>
       </aside>
 
-      <div class="touch-controls" id="touch-controls" aria-label="Movement controls">
-        <button type="button" data-move="up" aria-label="Move up">↑</button>
-        <button type="button" data-move="left" aria-label="Move left">←</button>
-        <button type="button" data-move="down" aria-label="Move down">↓</button>
-        <button type="button" data-move="right" aria-label="Move right">→</button>
-        <button type="button" class="touch-jump" id="touch-jump" aria-label="Jump">Jump</button>
-        <button type="button" class="touch-interact" id="touch-interact" aria-label="Talk to someone nearby">Talk</button>
+      <div class="touch-controls" id="touch-controls" aria-label="touch controls">
+        <div class="touch-joystick" id="touch-joystick" aria-label="move player" role="application">
+          <span class="joystick-knob" id="joystick-knob" aria-hidden="true"></span>
+        </div>
+        <div class="touch-actions" aria-label="actions">
+          <button type="button" class="touch-action touch-jump" id="touch-jump" aria-label="jump">↑</button>
+          <button type="button" class="touch-action touch-interact" id="touch-interact" aria-label="interact">E</button>
+          <button type="button" class="touch-action touch-run" id="touch-run" aria-label="run">⇧</button>
+        </div>
       </div>
 
       <section class="welcome-layer is-visible" id="welcome-layer" aria-labelledby="welcome-title">
