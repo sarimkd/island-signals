@@ -1,0 +1,245 @@
+/* Field notebook: white paper, collected scraps and readable hand-drawn charts. */
+.atlas-layer { --chapter-ink: #2f7768; padding: clamp(.5rem, 1.8vw, 1.4rem); background: rgba(11,32,31,.68); backdrop-filter: blur(13px) saturate(.72); perspective: 1800px; }
+.atlas-card.notebook-card { position: relative; isolation: isolate; width: min(92rem,100%); height: min(57rem,calc(100dvh - clamp(1rem,3.6vw,2.8rem))); grid-template-rows: auto auto minmax(0,1fr) auto; overflow: visible; border: 0; border-radius: .5rem 1rem .9rem .6rem; background: #6f5035; box-shadow: 0 34px 90px rgba(4,18,18,.5),0 5px 0 #4b3424,inset 0 0 0 2px rgba(255,255,255,.14); }
+.notebook-card::before { content: ""; position: absolute; z-index: 8; top: 4.55rem; bottom: 1.9rem; left: 42%; width: 2.25rem; transform: translateX(-50%); pointer-events: none; background: linear-gradient(90deg,rgba(72,55,39,.13),rgba(255,255,255,.72) 39%,rgba(71,51,34,.2) 55%,rgba(255,255,255,.18)); filter: blur(.4px); mix-blend-mode: multiply; }
+.notebook-card::after { content: ""; position: absolute; z-index: -1; inset: .5rem -.48rem -.45rem; border-radius: .45rem 1rem .85rem .6rem; background: #9b7857; transform: rotate(.18deg); }
+.notebook-card .atlas-header { position: relative; z-index: 15; min-height: 3.6rem; align-items: center; padding: .6rem 1rem .48rem 1.25rem; border-bottom: 0; background: #6f5035; color: #fffaf0; }
+.notebook-card .atlas-header h2 { margin-top: -.1rem; color: #fffaf0; font: 600 clamp(1.25rem,2vw,2rem)/1 Caveat,cursive; letter-spacing: 0; }
+.notebook-card .panel-kicker { margin: 0; color: #eadabf; font-size: .52rem; letter-spacing: .08em; text-transform: lowercase; }
+.notebook-card .icon-close { border-color: rgba(255,255,255,.35); background: rgba(255,255,255,.12); color: #fffaf0; }
+.notebook-tools { display:flex; align-items:center; gap:.32rem; }
+.notebook-tools > button:not(.icon-close) { display:grid; width:1.8rem; height:1.8rem; place-items:center; border:1px solid rgba(255,255,255,.3); border-radius:50%; background:rgba(255,255,255,.1); color:#fffaf0; font:700 1rem/1 "Patrick Hand",cursive; cursor:pointer; }
+.notebook-tools > button:disabled { opacity:.35; cursor:default; }
+.notebook-tools output { min-width:2.5rem; color:#eadabf; font:600 .7rem/1 "Patrick Hand",cursive; text-align:center; }
+.notebook-reveal-control { --hold-progress:0; display:flex; align-items:center; gap:.42rem; margin-right:.45rem; color:#fffaf0; }
+.notebook-reveal-control[hidden] { display:none; }
+.notebook-reveal-control > span:last-child { display:grid; gap:.05rem; text-align:left; }
+.notebook-reveal-control strong { font:700 .7rem/1 "Patrick Hand",cursive; }
+.notebook-reveal-control small { color:#eadabf; font:500 .58rem/1 "Patrick Hand",cursive; }
+.hold-progress { position:relative; display:grid; width:2.35rem; height:2.35rem; place-items:center; }
+.hold-progress svg { position:absolute; inset:0; width:100%; height:100%; transform:rotate(-90deg); }
+.hold-progress circle { fill:none; stroke-width:3; }
+.hold-track { stroke:rgba(255,255,255,.22); }
+.hold-meter { stroke:#f3c96b; stroke-linecap:round; stroke-dasharray:1; stroke-dashoffset:calc(1 - var(--hold-progress)); transition:stroke-dashoffset .08s linear; }
+.hold-progress b { position:relative; z-index:1; font:700 .85rem/1 "DM Sans",sans-serif; }
+.notebook-reveal-control.is-holding .hold-progress { filter:drop-shadow(0 0 5px rgba(243,201,107,.5)); }
+
+.notebook-card > .station-tabs { position: relative; z-index: 14; display: flex; align-items: end; gap: .35rem; overflow: visible; border: 0; padding: 0 1.25rem; background: #6f5035; }
+.notebook-card .station-tab { position: relative; flex: 0 0 min(9rem,16vw); grid-template-columns: auto 1fr auto; min-height: 2.7rem; gap: .45rem; overflow: visible; border: 0; border-radius: .55rem .55rem 0 0; padding: .5rem .7rem .42rem; background: var(--tab-color,#d9b565); box-shadow: inset 0 -4px rgba(70,50,30,.1),0 -3px 8px rgba(28,18,11,.15); color: #304e48; text-align: left; transform: translateY(.22rem) rotate(var(--tab-tilt,0deg)); transition: transform .2s ease,opacity .2s ease; }
+.notebook-card .station-tab:nth-child(1) { --tab-color:#e9b85f; --tab-tilt:-.5deg; }
+.notebook-card .station-tab:nth-child(2) { --tab-color:#8fcdd1; --tab-tilt:.35deg; }
+.notebook-card .station-tab:nth-child(3) { --tab-color:#aab8df; --tab-tilt:-.25deg; }
+.notebook-card .station-tab:nth-child(4) { --tab-color:#9fd0a4; --tab-tilt:.45deg; }
+.notebook-card .station-tab:nth-child(5) { --tab-color:#f0a082; --tab-tilt:-.35deg; }
+.notebook-card .station-tab:hover,.notebook-card .station-tab.is-active { transform: translateY(0) rotate(0); }
+.notebook-card .station-tab.is-active { color: #203c37; box-shadow: inset 0 -4px var(--chapter-ink),0 -4px 10px rgba(28,18,11,.2); }
+.notebook-card .station-tab.is-locked { opacity: .57; }
+.notebook-card .station-tab-index { display: grid; width: 1.45rem; height: 1.45rem; place-items: center; border-radius: 50%; background: rgba(255,255,255,.5); font: 700 .65rem/1 "Patrick Hand",cursive; }
+.notebook-card .station-tab > span:nth-child(2) { display: block; min-width: 0; }
+.notebook-card .station-tab strong { display: block; overflow: hidden; font: 700 .8rem/1.1 "Patrick Hand",cursive; text-overflow: ellipsis; white-space: nowrap; }
+.notebook-card .station-tab small { display: none; }
+.notebook-card .station-tab-check { color: #245e51; font-size: .65rem; }
+
+.notebook-card .atlas-layout { position: relative; z-index: 2; grid-template-columns: minmax(19rem,42%) minmax(0,1fr); overflow: hidden; background: transparent; transform-style: preserve-3d; }
+.notebook-card .atlas-story,.notebook-card .atlas-data { position: relative; background-color: #fbfaf2; background-image: radial-gradient(circle at 12% 7%,rgba(170,132,78,.08),transparent 21%),radial-gradient(circle at 83% 74%,rgba(116,90,56,.055),transparent 24%),repeating-linear-gradient(0deg,transparent 0 32px,rgba(62,103,94,.045) 33px 34px); }
+.notebook-card .atlas-story { display: grid; grid-template-rows: auto minmax(0,1fr); border-right: 0; padding: 1.25rem 1.55rem 1rem 1.35rem; }
+.notebook-card .atlas-story::before,.notebook-card .atlas-data::before { content: ""; position: absolute; inset: .55rem; border: 1px solid rgba(88,75,55,.08); border-radius: 48% 52% 50% 49% / 1% 1.4% 1% 1.5%; pointer-events: none; }
+.notebook-card .station-narrative { align-self: start; padding: .25rem .35rem .8rem; }
+.notebook-card .left-page-label { margin:0 0 .45rem; color:var(--chapter-ink); font:700 calc(.7rem * var(--notebook-zoom))/1 "Patrick Hand",cursive; letter-spacing:.07em; text-transform:lowercase; }
+.notebook-card .station-lead { margin: 0 0 .42rem; color: #253f3a; font: 700 clamp(1.55rem,2.5vw,2.35rem)/.98 Caveat,cursive; letter-spacing: 0; }
+.notebook-card .station-narrative > p:not(.station-lead,.term-definition) { max-width: 34rem; margin: 0; color: #425d56; font: 400 .9rem/1.4 "Patrick Hand",cursive; }
+.notebook-card .term-button { margin-top: .65rem; border-bottom: 2px solid var(--chapter-ink); color: var(--chapter-ink); font: 700 .76rem/1.2 "Patrick Hand",cursive; }
+.notebook-card .term-definition { margin-top: .48rem; border-left: 3px solid var(--chapter-ink); padding: .25rem 0 .25rem .65rem; color: #536862; font: 400 .76rem/1.35 "Patrick Hand",cursive; }
+.left-page-highlights { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.55rem; margin:.8rem 0 .2rem; }
+.left-page-highlights:empty { display:none; }
+.left-page-highlights > div { position:relative; border-bottom:2px solid color-mix(in srgb,var(--chapter-ink) 42%,transparent); padding:.35rem .2rem .45rem; }
+.left-page-highlights > div:nth-child(even) { transform:rotate(.35deg); }
+.left-page-highlights strong { display:block; width:max-content; max-width:100%; padding:0 .12rem; background:linear-gradient(transparent 45%,color-mix(in srgb,var(--chapter-ink) 23%,#fff) 46% 90%,transparent 91%); color:#27463f; font:700 calc(1.35rem * var(--notebook-zoom))/1 Caveat,cursive; }
+.left-page-highlights span { display:block; margin-top:.18rem; color:#687770; font:500 calc(.66rem * var(--notebook-zoom))/1.15 "Patrick Hand",cursive; }
+.notebook-card .atlas-story:has(.notebook-village-notes[hidden]) .station-narrative { align-self:stretch; display:flex; flex-direction:column; justify-content:center; padding-bottom:2rem; }
+
+.notebook-village-notes { min-height: 0; overflow-y: auto; padding: .4rem .3rem .8rem; scrollbar-color: rgba(55,83,76,.32) transparent; scrollbar-width: thin; }
+.notebook-village-notes header { position: sticky; z-index: 3; top: 0; display: flex; align-items: baseline; justify-content: space-between; gap: .6rem; border-top: 2px solid rgba(47,93,83,.28); padding: .45rem .15rem .35rem; background: rgba(251,250,242,.92); }
+.notebook-village-notes h3 { margin: 0; color: #2b4b44; font: 700 1.25rem/1 Caveat,cursive; }
+.notebook-village-notes header span { color: #72827e; font: 400 .65rem/1 "Patrick Hand",cursive; }
+.notebook-observations { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .9rem .75rem; align-items: start; padding: .45rem .35rem 1rem; }
+.margin-note { --note-paper:#fff1a8; position: relative; min-width: 0; display: grid; grid-template-columns: 3.2rem minmax(0,1fr); gap: .55rem; transform: rotate(var(--note-tilt)); border-radius: .08rem .16rem .1rem .08rem; padding: .75rem .68rem .65rem; background: var(--note-paper); box-shadow: 0 5px 9px rgba(66,52,31,.18),0 14px 22px rgba(66,52,31,.08); clip-path: polygon(1% 2%,97% 0,100% 94%,92% 98%,82% 96%,71% 100%,58% 97%,46% 100%,31% 97%,17% 100%,2% 96%); }
+.margin-note:nth-child(4n+1) { --note-paper:#fff0a8; }
+.margin-note:nth-child(4n+2) { --note-paper:#d9eef0; margin-top:.55rem; }
+.margin-note:nth-child(4n+3) { --note-paper:#f8d9d0; padding-top:.95rem; }
+.margin-note:nth-child(4n) { --note-paper:#e1edd0; margin-top:-.2rem; }
+.margin-note::before { content:""; position:absolute; top:-.38rem; left:37%; width:2.5rem; height:.85rem; background:rgba(225,208,163,.72); box-shadow:0 1px 2px rgba(74,59,35,.15); transform:rotate(-3deg); }
+.margin-note:nth-child(even)::before { left:auto; right:12%; transform:rotate(4deg); }
+.note-doodle { grid-row:1 / span 3; width:3.15rem; height:3.15rem; align-self:start; color:#315e54; }
+.margin-note strong { display:block; overflow:hidden; color:#274a43; font:700 1rem/1 Caveat,cursive; text-overflow:ellipsis; white-space:nowrap; }
+.margin-note small { display:block; margin-top:.05rem; color:#6e7469; font:500 .58rem/1 "Patrick Hand",cursive; letter-spacing:.02em; text-transform:lowercase; }
+.margin-note p,.notebook-empty { margin:.25rem 0 0; color:#344d47; font:400 .75rem/1.25 "Patrick Hand",cursive; }
+.notebook-empty { grid-column:1 / -1; max-width:25rem; padding:.65rem; border:2px dashed rgba(49,94,84,.22); border-radius:.55rem; }
+
+.notebook-card .atlas-data { min-width:0; grid-template-rows:auto auto auto auto minmax(17rem,1fr) auto; padding:1.05rem 1.35rem .75rem 1.7rem; }
+.notebook-card .filter-row { display:flex; gap:1rem; align-items:start; justify-content:space-between; }
+.notebook-card .filter-label { margin-bottom:.2rem; color:#62716d; font:700 .62rem/1 "Patrick Hand",cursive; letter-spacing:.04em; text-transform:lowercase; }
+.notebook-card .pill-row { display:flex; flex-wrap:wrap; gap:.28rem; }
+.notebook-card .filter-pill,.notebook-card .territory-tab { border:1.5px solid rgba(47,91,81,.34); background:rgba(255,255,255,.7); color:#47635c; font-family:"Patrick Hand",cursive; font-weight:400; }
+.notebook-card .filter-pill { padding:.3rem .58rem; font-size:.72rem; }
+.notebook-card .filter-pill:hover,.notebook-card .filter-pill.is-active,.notebook-card .territory-tab.is-active { border-color:var(--chapter-ink); background:var(--chapter-ink); color:#fffdf5; }
+.notebook-card .territory-block { min-width:0; margin-top:.48rem; }
+.territory-browser { display:grid; grid-template-columns:1.9rem minmax(0,1fr) 1.9rem; align-items:stretch; gap:.28rem; }
+.territory-scroll { border:1.5px solid rgba(47,91,81,.32); border-radius:.65rem; background:rgba(255,255,255,.72); color:var(--chapter-ink); font:700 1.15rem/1 "Patrick Hand",cursive; cursor:pointer; }
+.territory-scroll:disabled { opacity:.3; cursor:default; }
+.notebook-card .territory-tabs { display:grid; grid-auto-flow:column; grid-template-rows:repeat(2,auto); grid-auto-columns:max-content; gap:.25rem; overflow-x:auto; padding:.04rem .08rem .18rem; scroll-snap-type:x proximity; scrollbar-width:none; }
+.notebook-card .territory-tabs::-webkit-scrollbar { display:none; }
+.notebook-card .territory-tab { max-width:10.5rem; padding:.25rem .5rem; border-radius:.55rem; font-size:.68rem; scroll-snap-align:start; }
+.notebook-card .chart-head { align-items:end; margin-top:.5rem; border-top:2px solid rgba(46,91,81,.2); padding-top:.45rem; }
+.notebook-card .chart-head h3 { color:#263f39; font:700 clamp(1.3rem,2vw,1.9rem)/1 Caveat,cursive; letter-spacing:0; }
+.notebook-card .chart-head p { color:#65746f; font:400 .68rem/1.2 "Patrick Hand",cursive; }
+.notebook-card .selected-reading strong { color:var(--chapter-ink); font:700 clamp(1.4rem,2.5vw,2.2rem)/1 Caveat,cursive; }
+.notebook-card .selected-reading span { color:#62716d; font:400 .67rem/1 "Patrick Hand",cursive; }
+.notebook-card .chart-frame { overflow:visible; }
+.notebook-card #bar-chart { min-height:15rem; overflow:visible; }
+.notebook-card .chart-label,.notebook-card .chart-tick,.notebook-card .chart-value { font-family:"Patrick Hand",cursive; }
+.notebook-card .chart-note { color:#66736f; font:400 .68rem/1.25 "Patrick Hand",cursive; }
+.notebook-card .conclusion-panel { padding:.7rem .15rem; }
+.notebook-card .conclusion-intro,.notebook-card .conclusion-card p { font-family:"Patrick Hand",cursive; }
+.notebook-card .conclusion-card { border:2px dashed rgba(47,91,81,.25); border-radius:.4rem; background:rgba(255,255,255,.55); transform:rotate(var(--card-tilt,0)); }
+.notebook-card .conclusion-card:nth-child(1) { --card-tilt:-.35deg; }
+.notebook-card .conclusion-card:nth-child(2) { --card-tilt:.4deg; }
+.notebook-card .conclusion-card:nth-child(3) { --card-tilt:.25deg; }
+.notebook-card .conclusion-card:nth-child(4) { --card-tilt:-.4deg; }
+.notebook-card .conclusion-card strong,.notebook-card .conclusion-bottom { font-family:Caveat,cursive; }
+.notebook-card .atlas-footer { position:relative; z-index:12; padding:.42rem 1.15rem; border-top:0; background:#6f5035; color:#eadabf; font-family:"Patrick Hand",cursive; }
+
+.notebook-card.is-page-turning .atlas-data::after { content:""; position:absolute; z-index:20; inset:.12rem 0 .1rem; transform-origin:left center; background:linear-gradient(90deg,#ded9ca 0%,#fffef8 4%,#fbf9f0 72%,#ded8c8 98%); box-shadow:-4px 2px 8px rgba(64,49,32,.12),-28px 5px 40px rgba(42,31,20,.28); animation:notebook-page-turn .68s cubic-bezier(.46,.01,.18,1) both; pointer-events:none; backface-visibility:hidden; }
+@keyframes notebook-page-turn {
+  0% { transform:rotateY(2deg); opacity:0; box-shadow:-2px 2px 5px rgba(64,49,32,.08); }
+  12% { opacity:1; }
+  48% { transform:rotateY(-72deg) skewY(-.4deg); opacity:.98; box-shadow:-38px 8px 52px rgba(42,31,20,.34); }
+  100% { transform:rotateY(-176deg); opacity:0; box-shadow:-5px 2px 10px rgba(42,31,20,.12); }
+}
+
+@media (max-width:900px) {
+  .notebook-card::before { display:none; }
+  .notebook-card > .station-tabs { overflow-x:auto; padding-left:.6rem; }
+  .notebook-card .station-tab { flex-basis:7rem; }
+  .notebook-card .atlas-layout { display:block; overflow-y:auto; background:#fbfaf2; }
+  .notebook-card .atlas-story { display:block; border-bottom:1px solid rgba(76,67,52,.15); }
+  .notebook-village-notes { max-height:17rem; }
+  .notebook-card .atlas-data { min-height:44rem; padding-left:1rem; }
+}
+@media (max-width:560px) {
+  .atlas-layer { padding:0; }
+  .atlas-card.notebook-card { height:100dvh; border-radius:0; }
+  .notebook-card .atlas-header { padding:.48rem .65rem; }
+  .notebook-card .atlas-header h2 { max-width:18rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .notebook-card .station-tab { flex-basis:6.2rem; }
+  .notebook-observations { grid-template-columns:1fr; }
+  .notebook-card .filter-row { display:grid; }
+  .notebook-card .atlas-data { min-height:48rem; padding-right:.75rem; }
+}
+@media (prefers-reduced-motion:reduce) { .notebook-card.is-page-turning .atlas-data::after { animation:none; display:none; } }
+
+/* True two-page field book and worn chapter markers */
+.atlas-layer { inset:0; width:100%; max-width:100vw; overflow:hidden; contain:layout paint; }
+.atlas-card.notebook-card { width:min(92rem,calc(100vw - clamp(1rem,3.6vw,2.8rem))); max-width:100%; grid-template-rows:auto auto minmax(0,1fr) auto; }
+.notebook-card::before { left:50%; width:3.1rem; background:linear-gradient(90deg,rgba(61,43,28,.2),rgba(255,255,255,.68) 38%,rgba(54,37,24,.27) 53%,rgba(255,255,255,.12)); box-shadow:0 0 18px rgba(64,45,28,.11); }
+.notebook-card .atlas-layout { grid-template-columns:minmax(0,1fr) minmax(0,1fr); }
+.notebook-card .atlas-story { padding-right:2rem; box-shadow:inset -1.4rem 0 1.4rem -1.2rem rgba(78,58,35,.2); }
+.notebook-card .atlas-data { padding-left:2.15rem; box-shadow:inset 1.4rem 0 1.4rem -1.2rem rgba(62,43,27,.2); }
+
+.notebook-card > .station-tabs { gap:.45rem; align-items:end; padding:0 1.3rem; }
+.notebook-card .station-tab { flex:0 0 min(10rem,17vw); min-height:3.15rem; border:1px solid rgba(77,57,35,.16); border-bottom:0; border-radius:.5rem .75rem 0 0; padding:.55rem .68rem .62rem; clip-path:polygon(2% 5%,13% 1%,25% 4%,37% 0,50% 3%,64% 1%,78% 4%,91% 1%,99% 6%,98% 100%,1% 100%); filter:drop-shadow(0 -3px 3px rgba(42,28,17,.14)); }
+.notebook-card .station-tab::before { content:""; position:absolute; inset:.3rem; opacity:.3; pointer-events:none; mix-blend-mode:multiply; }
+.notebook-card .station-tab:nth-child(1)::before { background:repeating-linear-gradient(22deg,transparent 0 7px,rgba(117,70,34,.32) 8px 9px); }
+.notebook-card .station-tab:nth-child(2)::before { background:radial-gradient(ellipse at 20% 70%,transparent 0 34%,rgba(24,102,124,.5) 36% 40%,transparent 42%) 0 0/30px 15px; }
+.notebook-card .station-tab:nth-child(3)::before { background:repeating-linear-gradient(112deg,transparent 0 12px,rgba(52,92,139,.42) 13px 15px,transparent 16px 22px); }
+.notebook-card .station-tab:nth-child(4)::before { background:radial-gradient(ellipse at 30% 50%,rgba(39,107,67,.45) 0 23%,transparent 26%) 0 0/24px 15px; }
+.notebook-card .station-tab:nth-child(5)::before { background:repeating-linear-gradient(45deg,transparent 0 8px,rgba(126,57,48,.3) 9px 10px); }
+.notebook-card .station-tab > * { position:relative; z-index:1; }
+.notebook-card .station-tab.is-locked { opacity:.62; filter:grayscale(.35) drop-shadow(0 -2px 2px rgba(42,28,17,.12)); }
+.notebook-card .station-tab.is-locked .station-tab-index { background:rgba(71,60,48,.12); color:#6d665c; }
+
+.notebook-lock { position:absolute; z-index:11; inset:0; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); align-items:stretch; padding:0; background:#fbfaf2; background-image:radial-gradient(circle at 20% 15%,rgba(143,106,60,.07),transparent 20%),repeating-linear-gradient(0deg,transparent 0 32px,rgba(62,103,94,.045) 33px 34px); text-align:left; }
+.notebook-card.is-locked-chapter .atlas-story,.notebook-card.is-locked-chapter .atlas-data { visibility:hidden; }
+.notebook-lock-copy-page,.notebook-lock-doodle-page { position:relative; display:grid; align-content:center; justify-items:center; min-width:0; padding:clamp(1.4rem,4vw,4rem); }
+.notebook-lock-copy-page { box-shadow:inset -1.4rem 0 1.4rem -1.2rem rgba(78,58,35,.2); }
+.notebook-lock-copy-page > * { width:min(27rem,100%); }
+.notebook-lock-doodle-page { overflow:hidden; box-shadow:inset 1.4rem 0 1.4rem -1.2rem rgba(62,43,27,.2); color:var(--chapter-ink); }
+.notebook-lock-mark { display:grid; width:4.5rem; height:4.5rem; place-items:center; border:2px dashed rgba(69,84,75,.4); border-radius:50%; color:#8f7352; font-size:2rem; transform:rotate(-8deg); }
+.notebook-lock h3 { margin:.2rem 0 .45rem; color:#294b43; font:700 clamp(2rem,4vw,3.5rem)/1 Caveat,cursive; }
+.notebook-lock > p:not(.panel-kicker) { max-width:27rem; margin:0; color:#5c6d67; font:400 1rem/1.4 "Patrick Hand",cursive; }
+.notebook-lock-copy-page > p:not(.panel-kicker) { margin:0; color:#5c6d67; font:400 calc(1rem * var(--notebook-zoom))/1.4 "Patrick Hand",cursive; }
+.notebook-lock button { margin-top:1.2rem; border:0; border-bottom:2px solid #8f7352; padding:.3rem .45rem; background:transparent; color:#365b51; font:700 .85rem/1 "Patrick Hand",cursive; cursor:pointer; }
+.lock-doodle-symbol { position:relative; z-index:2; display:grid; width:clamp(9rem,18vw,15rem); height:clamp(9rem,18vw,15rem); place-items:center; border:4px solid currentColor; border-radius:44% 56% 48% 52% / 52% 46% 54% 48%; font:700 clamp(5rem,10vw,9rem)/1 Caveat,cursive; transform:rotate(-7deg); opacity:.78; }
+.lock-doodle-line { position:absolute; height:3px; border-radius:50%; background:currentColor; opacity:.3; transform-origin:left center; }
+.lock-doodle-line.line-one { width:42%; transform:translate(-4rem,-9rem) rotate(13deg); }
+.lock-doodle-line.line-two { width:33%; transform:translate(6rem,8rem) rotate(-11deg); }
+.lock-doodle-line.line-three { width:26%; transform:translate(-8rem,9rem) rotate(7deg); }
+.notebook-lock[data-chapter="ocean"] .lock-doodle-symbol { border-radius:50% 44% 55% 47%; transform:rotate(3deg); }
+.notebook-lock[data-chapter="rain"] .lock-doodle-symbol { border-style:dashed; transform:rotate(-3deg); }
+.notebook-lock[data-chapter="life"] .lock-doodle-symbol { border-radius:68% 32% 65% 35%; transform:rotate(12deg); }
+
+.notebook-page-nav { display:grid; grid-template-columns:2.35rem minmax(0,1fr) 2.35rem; align-items:center; width:min(22rem,100%); margin:0 auto .7rem; color:#496159; text-align:center; }
+.notebook-page-nav button { width:2.15rem; height:2.15rem; border:1px solid rgba(54,86,77,.25); border-radius:50%; background:rgba(255,255,255,.54); color:var(--chapter-ink); font:700 1.4rem/1 "Patrick Hand",cursive; cursor:pointer; }
+.notebook-page-nav button:disabled { opacity:.22; cursor:default; }
+.notebook-page-nav span { display:grid; }
+.notebook-page-nav strong { font:700 calc(1.08rem * var(--notebook-zoom))/1 Caveat,cursive; }
+.notebook-page-nav small { margin-top:.12rem; color:#777a73; font:500 calc(.7rem * var(--notebook-zoom))/1.2 "Patrick Hand",cursive; }
+
+.notebook-card .filter-row { align-items:center; border-top:1px dashed rgba(59,91,82,.2); border-bottom:1px dashed rgba(59,91,82,.2); padding:.38rem .15rem; }
+.notebook-card .filter-label { margin:0 .5rem 0 0; color:#766750; font-size:calc(.8rem * var(--notebook-zoom)); }
+.notebook-card .filter-row > div { display:flex; align-items:center; }
+.notebook-card .filter-pill { position:relative; border:0; border-radius:0; padding:.28rem .55rem .22rem; background:transparent; font-size:calc(.82rem * var(--notebook-zoom)); }
+.notebook-card .filter-pill::after { content:""; position:absolute; right:.32rem; bottom:.08rem; left:.32rem; height:1px; background:rgba(60,89,80,.25); transform:rotate(-1deg); }
+.notebook-card .filter-pill:hover,.notebook-card .filter-pill.is-active { background:transparent; color:var(--chapter-ink); }
+.notebook-card .filter-pill.is-active::after { height:3px; background:var(--chapter-ink); clip-path:polygon(0 40%,14% 15%,28% 50%,43% 22%,58% 58%,73% 20%,88% 48%,100% 25%,100% 100%,0 100%); }
+.notebook-card .territory-block { margin-top:.45rem; }
+.territory-browser { grid-template-columns:1.75rem minmax(0,1fr) 1.75rem; }
+.notebook-card .territory-tabs { grid-template-rows:auto; gap:.2rem; }
+.notebook-card .territory-tab { max-width:10.5rem; border:0; border-bottom:1px solid rgba(53,87,77,.28); border-radius:.15rem; background:rgba(255,255,255,.3); padding:.3rem .5rem; font-size:calc(.78rem * var(--notebook-zoom)); }
+.notebook-card .territory-tab.is-active { background:color-mix(in srgb,var(--chapter-ink) 13%,#fff); color:var(--chapter-ink); box-shadow:inset 0 -2px var(--chapter-ink); }
+.territory-scroll { border:0; background:transparent; box-shadow:none; }
+
+.chart-map-label,.chart-empty { fill:#294b43; font:700 12px "Patrick Hand",cursive; }
+.map-dot { cursor:pointer; }
+
+/* Written evidence spreads and adjustable reading size */
+.notebook-card { --notebook-zoom:1.1; }
+.notebook-card .station-narrative > p:not(.station-lead,.term-definition) { font-size:calc(.9rem * var(--notebook-zoom)); }
+.notebook-card .term-definition { font-size:calc(.76rem * var(--notebook-zoom)); }
+.margin-note p,.notebook-empty { font-size:calc(.75rem * var(--notebook-zoom)); }
+.notebook-card .chart-head p,.notebook-card .chart-note { font-size:calc(.68rem * var(--notebook-zoom)); }
+.notebook-card .filter-pill,.notebook-card .territory-tab { font-size:calc(.7rem * var(--notebook-zoom)); }
+.notebook-card .atlas-data:has(.evidence-writeup:not([hidden])),.notebook-card .atlas-data:has(.conclusion-panel:not([hidden])) { grid-template-rows:auto minmax(0,1fr) auto; }
+.evidence-writeup { align-self:start; max-width:42rem; margin:clamp(.5rem,2vh,1.35rem) auto 0; padding:.6rem 1rem 1rem; color:#354f48; font:400 calc(1rem * var(--notebook-zoom))/1.5 "Patrick Hand",cursive; }
+.evidence-writeup[hidden] { display:none; }
+.evidence-question { max-width:34rem; margin:0 0 .65rem; color:#233f38; font:700 calc(2.05rem * var(--notebook-zoom))/1 Caveat,cursive; }
+.evidence-kicker { margin:0 0 .4rem; color:var(--chapter-ink); font:700 calc(.72rem * var(--notebook-zoom))/1 "Patrick Hand",cursive; letter-spacing:.07em; text-transform:lowercase; }
+.evidence-writeup > p:not(.evidence-question,.evidence-direction) { max-width:39rem; margin:.45rem 0; }
+.evidence-highlights { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.8rem; margin:1.15rem 0 .85rem; padding:0; list-style:none; }
+.evidence-highlights li { position:relative; border-bottom:2px solid color-mix(in srgb,var(--chapter-ink) 52%,transparent); padding:.25rem .15rem .55rem; transform:rotate(var(--tilt,0deg)); }
+.evidence-highlights li:nth-child(1) { --tilt:-.5deg; }
+.evidence-highlights li:nth-child(2) { --tilt:.35deg; }
+.evidence-highlights li:nth-child(3) { --tilt:-.2deg; }
+.evidence-highlights mark { display:block; width:max-content; max-width:100%; padding:0 .18rem; background:linear-gradient(transparent 45%,color-mix(in srgb,var(--chapter-ink) 24%,#fff) 46% 88%,transparent 89%); color:#243f39; font:700 calc(1.5rem * var(--notebook-zoom))/1 Caveat,cursive; }
+.evidence-highlights span { display:block; margin-top:.22rem; color:#66756f; font-size:calc(.7rem * var(--notebook-zoom)); line-height:1.15; }
+.evidence-direction { width:max-content; max-width:100%; margin:1rem 0 0 auto; color:var(--chapter-ink); font:700 calc(.78rem * var(--notebook-zoom))/1.2 "Patrick Hand",cursive; transform:rotate(-.7deg); }
+
+.notebook-card .conclusion-panel { align-self:start; max-width:44rem; margin:clamp(.4rem,1.5vh,1rem) auto 0; padding:.4rem 1rem; color:#354f48; }
+.conclusion-spread { font:400 calc(1rem * var(--notebook-zoom))/1.48 "Patrick Hand",cursive; }
+.conclusion-spread h3 { max-width:38rem; margin:.1rem 0 .7rem; color:#233f38; font:700 calc(2.15rem * var(--notebook-zoom))/1 Caveat,cursive; }
+.conclusion-spread > p { max-width:42rem; margin:.48rem 0; }
+.conclusion-kicker { color:var(--chapter-ink); font-size:calc(.72rem * var(--notebook-zoom)); font-weight:700; letter-spacing:.08em; text-transform:lowercase; }
+.conclusion-spread blockquote { max-width:36rem; margin:1rem 0 .5rem 1rem; border-left:4px solid var(--chapter-ink); padding:.4rem 0 .4rem .85rem; color:#28483f; font:700 calc(1.35rem * var(--notebook-zoom))/1.1 Caveat,cursive; transform:rotate(-.35deg); }
+.signal-ledger { margin:.7rem 0; border-top:2px solid rgba(49,91,81,.24); }
+.signal-ledger div { display:grid; grid-template-columns:4.5rem minmax(0,1fr); gap:.75rem; border-bottom:1px dashed rgba(49,91,81,.25); padding:.48rem .1rem; }
+.signal-ledger dt { color:var(--chapter-ink); font:700 calc(1rem * var(--notebook-zoom))/1 Caveat,cursive; }
+.signal-ledger dd { margin:0; }
+.signal-ledger strong { color:#27463f; }
+.conclusion-final { margin-top:1rem !important; color:#24473e; font:700 calc(1.4rem * var(--notebook-zoom))/1.1 Caveat,cursive; text-decoration:underline; text-decoration-color:color-mix(in srgb,var(--chapter-ink) 55%,transparent); text-decoration-thickness:3px; text-underline-offset:.18rem; }
+
+@media (max-width:900px) {
+  .notebook-card .atlas-layout { display:block; }
+  .notebook-card .atlas-story,.notebook-card .atlas-data { padding-right:1rem; padding-left:1rem; box-shadow:none; }
+  .notebook-card .filter-row > div { align-items:flex-start; }
+  .evidence-highlights { grid-template-columns:1fr; gap:.35rem; }
+}

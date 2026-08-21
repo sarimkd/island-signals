@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="An explorable Pacific climate data story." />
+    <title>Island Signals</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Kalam:wght@400;700&family=Patrick+Hand&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles/base.css?v=ui-4" />
+    <link rel="stylesheet" href="styles/components/dialogue.css?v=4" />
+    <link rel="stylesheet" href="styles/components/notebook.css?v=draft-9" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.184.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.184.0/examples/jsm/",
+          "roughjs": "https://cdn.jsdelivr.net/npm/roughjs@4.6.6/bundled/rough.esm.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <main id="experience" aria-label="Island Signals interactive climate story">
+      <canvas id="world" aria-label="An explorable Pacific climate village"></canvas>
+      <div class="world-wash" aria-hidden="true"></div>
+
+      <header class="hud-top">
+        <div class="field-progress" aria-live="polite">
+          <span class="progress-title">Island Signals</span>
+          <b class="progress-topic">Shared signals, local differences</b>
+          <p class="progress-question">Which changes are shared across Pacific territories, and which need local answers?</p>
+          <small id="quest-copy">find the four field guides</small>
+          <div class="progress-record-row">
+            <strong id="progress-count">0 of 4 records</strong>
+            <div class="progress-dots" id="progress-dots" aria-hidden="true"></div>
+          </div>
+        </div>
+        <nav class="hud-actions" aria-label="Story controls">
+          <button class="hud-button" id="help-button" type="button"><span aria-hidden="true">?</span>how to explore</button>
+          <button class="hud-button hud-button-primary" id="atlas-button" type="button"><span aria-hidden="true">▤</span>field notebook</button>
+          <button class="hud-icon-button" id="credits-button" type="button" aria-label="Information and credits">i</button>
+        </nav>
+      </header>
+
+      <div class="station-labels" id="station-labels" aria-label="Data stations"></div>
+      <div class="nearby-callout" id="nearby-callout" hidden>
+        <span class="nearby-caller" id="nearby-caller">sela vuki</span>
+        <span class="nearby-message" id="nearby-message">i noticed something worth recording</span>
+      </div>
+
+      <button class="interaction-prompt" id="interaction-prompt" type="button" hidden>
+        <kbd>E</kbd>
+        <span id="interaction-copy">Talk</span>
+      </button>
+
+      <aside class="dialogue-box" id="dialogue-box" aria-hidden="true" aria-live="polite">
+        <div class="dialogue-identity">
+          <strong id="dialogue-speaker">Professor Piko Puddlejump</strong>
+          <span id="dialogue-role">Field survey lead</span>
+        </div>
+        <p id="dialogue-text"></p>
+        <span class="dialogue-key-hint" aria-hidden="true"><kbd>enter</kbd> or <kbd>e</kbd></span>
+        <button id="dialogue-next" type="button" aria-label="next line"><span aria-hidden="true">next</span></button>
+      </aside>
+
+      <div class="touch-controls" id="touch-controls" aria-label="Movement controls">
+        <button type="button" data-move="up" aria-label="Move up">↑</button>
+        <button type="button" data-move="left" aria-label="Move left">←</button>
+        <button type="button" data-move="down" aria-label="Move down">↓</button>
+        <button type="button" data-move="right" aria-label="Move right">→</button>
+        <button type="button" class="touch-jump" id="touch-jump" aria-label="Jump">Jump</button>
+        <button type="button" class="touch-interact" id="touch-interact" aria-label="Talk to someone nearby">Talk</button>
+      </div>
+
+      <section class="welcome-layer is-visible" id="welcome-layer" aria-labelledby="welcome-title">
+        <article class="welcome-card">
+          <div class="welcome-doodle" aria-hidden="true">
+            <svg viewBox="0 0 220 170" role="presentation">
+              <circle class="doodle-sun" cx="171" cy="36" r="18"></circle>
+              <path class="doodle-palm" d="M104 142 C108 111 109 82 103 53 M104 55 C78 39 61 42 48 54 M104 55 C84 24 67 19 51 23 M105 55 C119 26 139 19 158 23 M106 56 C139 40 158 43 174 57 M103 55 C100 29 108 17 119 8"></path>
+              <path class="doodle-island" d="M36 139 C70 126 134 125 181 141 C151 153 77 157 36 139 Z"></path>
+              <path class="doodle-wave" d="M18 151 C36 143 49 159 67 151 C85 143 98 159 116 151 C134 143 147 159 165 151 C183 143 196 159 212 151"></path>
+            </svg>
+          </div>
+          <p class="welcome-kicker">An interactive climate story</p>
+          <h1 id="welcome-title">Island Signals</h1>
+          <p class="welcome-deck">Join Malia in the village, meet four local guides and investigate what the Pacific climate records say together.</p>
+          <div class="welcome-actions">
+            <button class="button-main" id="enter-world" type="button">Explore the village</button>
+            <button class="button-secondary" id="enter-atlas" type="button">Open the field notebook</button>
+          </div>
+          <div class="welcome-controls" aria-label="Keyboard controls">
+            <span><kbd>WASD</kbd> or <kbd>↑↓←→</kbd> move</span>
+            <span><kbd>Shift</kbd> run</span>
+            <span><kbd>Space</kbd> jump</span>
+            <span><kbd>E</kbd> talk</span>
+          </div>
+          <p class="welcome-note">Each evidence chapter is unlocked by finding its field guide.</p>
+        </article>
+      </section>
+
+      <section class="credits-layer" id="credits-layer" aria-hidden="true" aria-labelledby="credits-title">
+        <article class="credits-card">
+          <button class="icon-close" id="credits-close" type="button" aria-label="Close information">×</button>
+          <p class="panel-kicker">about this project</p>
+          <h2 id="credits-title">A Pacific data investigation</h2>
+          <p>Built for the Pacific DataViz Challenge by Sarim Khan.</p>
+          <p>3D models and environment assets are from Kenney asset packs. Data visualizations use the official challenge datasets.</p>
+        </article>
+      </section>
+
+      <section class="help-layer" id="help-layer" aria-hidden="true" aria-labelledby="help-title">
+        <article class="help-card">
+          <button class="icon-close" id="help-close" type="button" aria-label="Close help">×</button>
+          <p class="panel-kicker">Controls</p>
+          <h2 id="help-title">Explore at your own pace</h2>
+          <div class="help-grid">
+            <div><kbd>WASD</kbd><strong>Walk</strong><span>Arrow keys work too.</span></div>
+            <div><kbd>Shift</kbd><strong>Run</strong><span>Hold while moving.</span></div>
+            <div><kbd>Space</kbd><strong>Jump</strong><span>Clear small changes in the route.</span></div>
+            <div><kbd>E</kbd><strong>Talk</strong><span>Speak with someone nearby.</span></div>
+            <div><kbd>N</kbd><strong>Notebook</strong><span>Review records you have collected.</span></div>
+            <div><kbd>Mouse</kbd><strong>Look around</strong><span>Drag to turn. Scroll to zoom.</span></div>
+          </div>
+          <p>Press N to open the notebook. Each field guide unlocks one evidence chapter. Other conversations add local observations only after a relevant detail has actually been shared.</p>
+        </article>
+      </section>
+
+      <section class="atlas-layer" id="atlas-layer" aria-hidden="true" aria-labelledby="atlas-title">
+        <article class="atlas-card notebook-card">
+          <header class="atlas-header">
+            <div>
+              <p class="panel-kicker" id="atlas-kicker">Field station 1</p>
+              <h2 id="atlas-title">Land temperature</h2>
+            </div>
+            <div class="notebook-tools" aria-label="Notebook controls">
+              <div class="notebook-reveal-control" id="notebook-reveal-control">
+                <span class="hold-progress" aria-hidden="true">
+                  <svg viewBox="0 0 44 44"><circle class="hold-track" cx="22" cy="22" r="18"></circle><circle class="hold-meter" cx="22" cy="22" r="18" pathLength="1"></circle></svg>
+                  <b>E</b>
+                </span>
+                <span><strong>hold for 5 seconds</strong><small>reveal every chapter</small></span>
+              </div>
+              <button id="notebook-zoom-out" type="button" aria-label="Make notebook text smaller">−</button>
+              <output id="notebook-zoom-label" aria-live="polite">110%</output>
+              <button id="notebook-zoom-in" type="button" aria-label="Make notebook text larger">+</button>
+              <button class="icon-close" id="atlas-close" type="button" aria-label="Close field notebook">×</button>
+            </div>
+          </header>
+
+          <nav class="station-tabs" id="station-tabs" aria-label="Notebook chapters"></nav>
+
+          <div class="atlas-layout">
+            <section class="notebook-lock" id="notebook-lock" hidden>
+              <div class="notebook-lock-copy-page">
+                <span class="notebook-lock-mark" aria-hidden="true">⌁</span>
+                <p class="panel-kicker">field note not collected</p>
+                <h3 id="notebook-lock-title">Find Dr. Afi Leka</h3>
+                <p id="notebook-lock-copy">Talk to the land climate researcher to collect this evidence chapter.</p>
+                <button type="button" id="notebook-lock-close">return to the village</button>
+              </div>
+              <div class="notebook-lock-doodle-page" aria-hidden="true">
+                <span class="lock-doodle-symbol" id="lock-doodle-symbol">☀</span>
+                <span class="lock-doodle-line line-one"></span>
+                <span class="lock-doodle-line line-two"></span>
+                <span class="lock-doodle-line line-three"></span>
+              </div>
+            </section>
+            <aside class="atlas-story">
+              <div class="station-narrative">
+                <p class="left-page-label" id="left-page-label">the field question</p>
+                <p class="station-lead" id="station-lead"></p>
+                <p id="station-explanation"></p>
+                <div class="left-page-highlights" id="left-page-highlights"></div>
+                <button class="term-button" id="term-button" type="button" aria-describedby="term-definition">
+                  <span id="term-name">Fitted trend</span><span aria-hidden="true">?</span>
+                </button>
+                <p class="term-definition" id="term-definition" hidden></p>
+              </div>
+              <section class="notebook-village-notes" aria-label="Malia's village notes">
+                <header><h3>Malia's village notes</h3><span id="notebook-note-count">0 village notes</span></header>
+                <div class="notebook-observations" id="notebook-observations"></div>
+              </section>
+            </aside>
+
+            <section class="atlas-data" aria-label="Interactive chart">
+              <nav class="notebook-page-nav" aria-label="Pages in this evidence chapter">
+                <button id="notebook-page-prev" type="button" aria-label="Previous notebook spread">‹</button>
+                <span><strong id="notebook-page-label">regional pattern</strong><small id="notebook-page-numbers">pages 2 and 3</small></span>
+                <button id="notebook-page-next" type="button" aria-label="Next notebook spread">›</button>
+              </nav>
+              <article class="evidence-writeup" id="evidence-writeup" hidden></article>
+              <div class="filter-row">
+                <div>
+                  <span class="filter-label">Subregion</span>
+                  <div class="pill-row" id="region-tabs"></div>
+                </div>
+                <div class="metric-filter" id="metric-filter-wrap">
+                  <span class="filter-label">Measure</span>
+                  <div class="pill-row" id="metric-tabs"></div>
+                </div>
+              </div>
+
+              <div class="territory-block">
+                <span class="filter-label">Selected territory</span>
+                <div class="territory-browser">
+                  <button class="territory-scroll" id="territory-prev" type="button" aria-label="Previous territories">‹</button>
+                  <div class="territory-tabs" id="territory-tabs"></div>
+                  <button class="territory-scroll" id="territory-next" type="button" aria-label="Next territories">›</button>
+                </div>
+              </div>
+
+              <div class="chart-head">
+                <div>
+                  <h3 id="chart-title">All monitored territories are warming</h3>
+                  <p id="chart-subtitle"></p>
+                </div>
+                <div class="selected-reading" id="selected-reading"></div>
+              </div>
+
+              <div class="chart-frame" id="chart-frame">
+                <svg id="bar-chart" role="img" aria-labelledby="chart-title chart-subtitle"></svg>
+                <div class="chart-tooltip" id="chart-tooltip" role="tooltip" hidden></div>
+              </div>
+              <div class="conclusion-panel" id="conclusion-panel" hidden></div>
+              <p class="chart-note" id="chart-note"></p>
+            </section>
+          </div>
+
+          <footer class="atlas-footer">
+            <span>Field notebook using official 2026 challenge datasets</span>
+            <span>Trends describe the supplied records. They are not forecasts.</span>
+          </footer>
+        </article>
+      </section>
+
+      <div class="loading-layer" id="loading-layer" aria-live="polite">
+        <div class="loading-card">
+          <div class="loading-doodle" aria-hidden="true">
+            <svg viewBox="0 0 220 170" role="presentation">
+              <circle class="doodle-sun" cx="171" cy="36" r="18"></circle>
+              <path class="doodle-palm" d="M104 142 C108 111 109 82 103 53 M104 55 C78 39 61 42 48 54 M104 55 C84 24 67 19 51 23 M105 55 C119 26 139 19 158 23 M106 56 C139 40 158 43 174 57 M103 55 C100 29 108 17 119 8"></path>
+              <path class="doodle-island" d="M36 139 C70 126 134 125 181 141 C151 153 77 157 36 139 Z"></path>
+              <path class="doodle-wave" d="M18 151 C36 143 49 159 67 151 C85 143 98 159 116 151 C134 143 147 159 165 151 C183 143 196 159 212 151"></path>
+            </svg>
+          </div>
+          <p class="loading-eyebrow">preparing your Pacific field notebook</p>
+          <strong>Drawing the island</strong>
+          <p class="loading-intro">A village of climate records, local observations and four questions is taking shape.</p>
+          <div class="loading-track"><span id="loading-bar"></span></div>
+          <div class="loading-status"><span id="loading-copy">sketching the coastline</span><b id="loading-percent">0%</b></div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      function loadChallengeObject(url, name) {
+        return fetch(url).then((response) => {
+          if (!response.ok) throw new Error(`Could not load ${url}`);
+          return response.text();
+        }).then((source) => {
+          const prefix = `const ${name} = `;
+          const start = source.indexOf(prefix) + prefix.length;
+          const end = source.lastIndexOf(";");
+          return Function(`return (${source.slice(start, end)})`)();
+        });
+      }
+      window.PACIFIC_DATA_PROMISE = Promise.all([
+        loadChallengeObject("data/processed/territory-data.js", "DATA"),
+        loadChallengeObject("data/processed/climate-series.js", "CLIMATE"),
+      ]);
+    </script>
+    <script type="module" src="src/main.js?v=repository-refactor-2"></script>
+  </body>
+</html>
