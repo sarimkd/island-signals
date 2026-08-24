@@ -49,7 +49,7 @@
 .notebook-card .station-lead { margin: 0 0 .42rem; color: #253f3a; font: 700 clamp(1.55rem,2.5vw,2.35rem)/.98 Caveat,cursive; letter-spacing: 0; }
 .notebook-card .station-narrative > p:not(.station-lead,.term-definition) { max-width: 34rem; margin: 0; color: #425d56; font: 400 .9rem/1.4 "Patrick Hand",cursive; }
 .notebook-card .term-button { margin-top: .65rem; border-bottom: 2px solid var(--chapter-ink); color: var(--chapter-ink); font: 700 .76rem/1.2 "Patrick Hand",cursive; }
-.notebook-card .term-definition { margin-top: .48rem; border-left: 3px solid var(--chapter-ink); padding: .25rem 0 .25rem .65rem; color: #536862; font: 400 .76rem/1.35 "Patrick Hand",cursive; }
+.notebook-card .term-definition { margin-top:.48rem; border-radius:.35rem; padding:.4rem .55rem; background:color-mix(in srgb,var(--chapter-ink) 8%,transparent); color:#536862; font:400 .76rem/1.35 "Patrick Hand",cursive; }
 .left-page-highlights { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.55rem; margin:.8rem 0 .2rem; }
 .left-page-highlights:empty { display:none; }
 .left-page-highlights > div { position:relative; border-bottom:2px solid color-mix(in srgb,var(--chapter-ink) 42%,transparent); padding:.35rem .2rem .45rem; }
@@ -235,7 +235,7 @@
 .conclusion-spread h3 { max-width:38rem; margin:.1rem 0 .7rem; color:#233f38; font:700 calc(2.15rem * var(--notebook-zoom))/1 Caveat,cursive; }
 .conclusion-spread > p { max-width:42rem; margin:.48rem 0; }
 .conclusion-kicker { color:var(--chapter-ink); font-size:calc(.72rem * var(--notebook-zoom)); font-weight:700; letter-spacing:.08em; text-transform:lowercase; }
-.conclusion-spread blockquote { max-width:36rem; margin:1rem 0 .5rem 1rem; border-left:4px solid var(--chapter-ink); padding:.4rem 0 .4rem .85rem; color:#28483f; font:700 calc(1.35rem * var(--notebook-zoom))/1.1 Caveat,cursive; transform:rotate(-.35deg); }
+.conclusion-callout { width:max-content; max-width:36rem; margin:1rem 0 .5rem !important; padding:.15rem .3rem; background:linear-gradient(transparent 46%,color-mix(in srgb,var(--chapter-ink) 18%,#fff) 47% 88%,transparent 89%); color:#28483f; font:700 calc(1.35rem * var(--notebook-zoom))/1.1 Caveat,cursive; transform:rotate(-.35deg); }
 .signal-ledger { margin:.7rem 0; border-top:2px solid rgba(49,91,81,.24); }
 .signal-ledger div { display:grid; grid-template-columns:4.5rem minmax(0,1fr); gap:.75rem; border-bottom:1px dashed rgba(49,91,81,.25); padding:.48rem .1rem; }
 .signal-ledger dt { color:var(--chapter-ink); font:700 calc(1rem * var(--notebook-zoom))/1 Caveat,cursive; }

@@ -399,7 +399,7 @@ export function createNotebookController({
        <p>Across every observed territory, sea-surface temperature and sea level trend upward. The water surrounding the islands gives a shared warning, while the freshwater people depend on is far less uniform.</p>
        <p>Rainfall trends split 15 upward and seven downward. Safely managed drinking-water access ranges from 48.11% to 100% in the common 2020 comparison. The 2026 observing record ranges from zero to eight compliant fixed land stations.</p>
        <p>The records do not measure saltwater intrusion, aquifer condition or service reliability, and they do not prove that climate trends caused current access. They do reveal why freshwater cannot be treated as a secondary issue.</p>
-       <blockquote>Salt water surrounds every island. Secure freshwater cannot be assumed.</blockquote>
+       <p class="conclusion-callout">Salt water surrounds every island. Secure freshwater cannot be assumed.</p>
        <aside class="research-note"><p><strong>Published context:</strong> Research using 1951 to 2023 observations from Tarawa and Kiritimati found ocean warming without a significant long-term annual rainfall trend. ENSO variability remained strong, and severe drought remained a challenge.</p><a href="https://doi.org/10.3390/atmos15060666" target="_blank" rel="noreferrer">White, Falkland and Redfern (2024) ↗</a></aside>`,
       `<p class="conclusion-kicker">the evidence chain</p>
        <h3>Four records reveal where the warning changes</h3>

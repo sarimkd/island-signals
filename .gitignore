@@ -22,6 +22,13 @@ analysis/internal/
 analysis/review/
 analysis/notes/
 
+# Local development and reproducibility helpers
+README.md
+package.json
+scripts/
+analysis/scripts/
+analysis/outputs/
+
 # Challenge datasets not used in this entry
 data/source/challenge-2026/*
 !data/source/challenge-2026/mean-surface-temperature-anomalies.csv
