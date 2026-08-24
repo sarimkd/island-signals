@@ -100,10 +100,10 @@ export function createInputController({
   }, { passive: false });
 
   document.querySelector("#enter-world").addEventListener("click", beginWorld);
-  document.querySelector("#enter-atlas").addEventListener("click", () => { setWorldStarted(true); openAtlas("land"); });
+  document.querySelector("#enter-atlas").addEventListener("click", () => { setWorldStarted(true); openAtlas("ocean"); });
   document.querySelector("#atlas-button").addEventListener("click", () => {
     const selectedStation = notebookController.getSelectedStation();
-    openAtlas(selectedStation === "conclusion" ? "land" : selectedStation);
+    openAtlas(selectedStation === "conclusion" ? "ocean" : selectedStation);
   });
   document.querySelector("#help-button").addEventListener("click", () => showLayer(dom.help, true));
   document.querySelector("#help-close").addEventListener("click", () => showLayer(dom.help, false));

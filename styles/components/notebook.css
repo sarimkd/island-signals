@@ -176,7 +176,8 @@
 .lock-doodle-line.line-three { width:26%; transform:translate(-8rem,9rem) rotate(7deg); }
 .notebook-lock[data-chapter="ocean"] .lock-doodle-symbol { border-radius:50% 44% 55% 47%; transform:rotate(3deg); }
 .notebook-lock[data-chapter="rain"] .lock-doodle-symbol { border-style:dashed; transform:rotate(-3deg); }
-.notebook-lock[data-chapter="life"] .lock-doodle-symbol { border-radius:68% 32% 65% 35%; transform:rotate(12deg); }
+.notebook-lock[data-chapter="water"] .lock-doodle-symbol { border-radius:68% 32% 65% 35%; transform:rotate(12deg); }
+.notebook-lock[data-chapter="observations"] .lock-doodle-symbol { border-style:double; transform:rotate(4deg); }
 
 .notebook-page-nav { display:grid; grid-template-columns:2.35rem minmax(0,1fr) 2.35rem; align-items:center; width:min(22rem,100%); margin:0 auto .7rem; color:#496159; text-align:center; }
 .notebook-page-nav button { width:2.15rem; height:2.15rem; border:1px solid rgba(54,86,77,.25); border-radius:50%; background:rgba(255,255,255,.54); color:var(--chapter-ink); font:700 1.4rem/1 "Patrick Hand",cursive; cursor:pointer; }
@@ -223,6 +224,11 @@
 .evidence-highlights mark { display:block; width:max-content; max-width:100%; padding:0 .18rem; background:linear-gradient(transparent 45%,color-mix(in srgb,var(--chapter-ink) 24%,#fff) 46% 88%,transparent 89%); color:#243f39; font:700 calc(1.5rem * var(--notebook-zoom))/1 Caveat,cursive; }
 .evidence-highlights span { display:block; margin-top:.22rem; color:#66756f; font-size:calc(.7rem * var(--notebook-zoom)); line-height:1.15; }
 .evidence-direction { width:max-content; max-width:100%; margin:1rem 0 0 auto; color:var(--chapter-ink); font:700 calc(.78rem * var(--notebook-zoom))/1.2 "Patrick Hand",cursive; transform:rotate(-.7deg); }
+.research-note { max-width:40rem; margin:.9rem 0 .25rem; border-top:1px dashed color-mix(in srgb,var(--chapter-ink) 36%,transparent); padding:.55rem .1rem 0; color:#52655f; font:400 calc(.74rem * var(--notebook-zoom))/1.32 "Patrick Hand",cursive; }
+.research-note p { margin:0 0 .25rem; }
+.research-note strong { color:#304f47; }
+.research-note a { color:var(--chapter-ink); font-weight:700; text-decoration:underline; text-decoration-thickness:1.5px; text-underline-offset:.16rem; }
+.research-note a:hover,.research-note a:focus-visible { color:#213f38; }
 
 .notebook-card .conclusion-panel { align-self:start; max-width:44rem; margin:clamp(.4rem,1.5vh,1rem) auto 0; padding:.4rem 1rem; color:#354f48; }
 .conclusion-spread { font:400 calc(1rem * var(--notebook-zoom))/1.48 "Patrick Hand",cursive; }

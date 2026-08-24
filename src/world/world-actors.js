@@ -81,10 +81,10 @@ export function createWorldActors({
     if (round >= 3) return [{ speaker: station.guide, text: `Look at the ${station.title.toLowerCase()} record again, then compare it with the other districts.` }];
     const middle = round === 0 ? station.lead : round === 1 ? station.explanation : `You have the ${station.short.toLowerCase()} record now. Compare it with the other stations before deciding what the region needs.`;
     const openers = {
-      land: [station.greeting, "Let us read the full land pattern carefully.", "The land chapter gives you the shared baseline."],
-      ocean: [station.greeting, "This time, compare sea heat and sea level side by side.", "The two ocean measures belong together, but not in one number."],
-      rain: [station.greeting, "Come back to the fifteen-seven split.", "Rainfall is the reminder that regional direction can break locally."],
-      life: [station.greeting, "Look again at how the 2024 endpoints compare with 1993.", "The life chapter adds a separate pattern to your final answer."],
+      ocean: [station.greeting, "Compare ocean heat and sea level side by side.", "Both ocean records share a direction, but keep their units separate."],
+      rain: [station.greeting, "Come back to the fifteen-seven split and the size of the annual swings.", "Rainfall is where one Pacific-wide water trajectory breaks apart."],
+      water: [station.greeting, "Use the common 2020 comparison so every territory is read in the same year.", "This record describes access to safely managed water, not a climate effect."],
+      observations: [station.greeting, "Read the station count, then read its limitation.", "The count shows formal coverage, not whether a territory's network is sufficient."],
     };
     return [
       { speaker: station.guide, text: openers[station.id][round] },
@@ -222,17 +222,17 @@ export function createWorldActors({
       root,
       actor,
       notebookRound: 1,
-      notebookEntry: { id: "professor-piko", chapter: "conclusion", kind: "research", name: "Professor Piko Puddlejump", role: "field survey lead", text: "Ask which directions are shared across territories and which patterns remain local." },
+      notebookEntry: { id: "professor-piko", chapter: "conclusion", kind: "research", name: "Professor Piko Puddlejump", role: "field survey lead", text: "Find what Pacific islands must know to protect freshwater as the ocean warms and rises." },
       getConversation: (round) => {
         if (professorConversationComplete) return [{ speaker: "Professor Piko Puddlejump", text: "The conclusion is in your notebook. I am officially returning to my clipboard." }];
         if (visited.size === STATIONS.length) return [
-          { speaker: "Professor Piko Puddlejump", text: "You have all four records. Open the notebook and put the evidence beside the conclusion." },
-          { speaker: PLAYER_NAME, text: "I found a shared physical direction, but rainfall and biodiversity still need their own reading." },
-          { speaker: "Professor Piko Puddlejump", text: "Exactly. The answer is not one Pacific average. Read the conclusion, then decide what should be shared and what must stay local." },
+          { speaker: "Professor Piko Puddlejump", text: "You have all four records. Where does the freshwater warning become most urgent?" },
+          { speaker: PLAYER_NAME, text: "The ocean pressure is shared, but freshwater security is not. Rainfall divides, safe-water access ranges from 48.11% to 100%, and formal station coverage ranges from zero to eight." },
+          { speaker: "Professor Piko Puddlejump", text: "That is the answer. Protect freshwater locally: watch rainfall and groundwater, secure safe-water services, and close observation gaps. Keep the caveat clear. These records reveal pressure and unequal starting conditions, not a causal chain." },
         ];
         if (round >= 3) return [{ speaker: "Professor Piko Puddlejump", text: visited.size === STATIONS.length ? "Put the four records side by side. Answer the question we began with." : "Keep exploring. You still need the four directions before you can compare them." }];
-        const reminders = ["Find Dr. Afi, Sela, Officer Noa and Litia. Each answers one part of our main question.", "Compare directions before interpretations. Rainfall may not follow the land and ocean pattern.", "Talk to the village too. Each person and animal adds one practical observation to your notebook.", "Keep exploring. The answer appears only when the four records sit beside one another."];
-        const replies = ["I will begin with the land record.", "I am checking agreement first and differences second.", "I will ask what each pattern looks like in daily village life.", "I am close. I still need to compare the chapters directly."];
+        const reminders = ["Find Sela, Officer Noa, Litia and Dr. Afi. Follow freshwater security from ocean pressure, to rain, to household access and finally to the instruments.", "Compare directions before interpretations. The same ocean pressure does not guarantee the same rainfall or water access.", "Talk to the village too. Their observations make the freshwater problem tangible, but do not prove what caused a measured change.", "Keep exploring. The answer appears when pressure, supply, access and observation are read together without blending them into one score."];
+        const replies = ["I will start with the water around the islands.", "Then I will compare the rain and the water people can safely use.", "I will keep local observations separate from statistical evidence.", "I am close. I still need to connect the four records without making a causal claim."];
         return [
           { speaker: "Professor Piko Puddlejump", text: reminders[round] },
           { speaker: PLAYER_NAME, text: replies[round] },

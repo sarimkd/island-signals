@@ -10,14 +10,15 @@ export function createNotebookController({
   territories,
   DATA,
   CLIMATE,
+  WATER_STORY,
   renderHorizontalBarChart,
   renderNotebookDetail,
   showLayer,
   startDialogue,
   playGuideGesture
 }) {
-  let selectedStation = "land";
-  let selectedMetric = "landTemp";
+  let selectedStation = "ocean";
+  let selectedMetric = "sst";
   let selectedRegion = "All";
   let selectedTerritory = "Fiji";
   let selectedNotebookPage = 0;
@@ -44,10 +45,10 @@ export function createNotebookController({
     });
     selectedNotebookPage = 0;
     selectedRegion = "All";
-    selectedStation = "land";
-    selectedMetric = "landTemp";
+    selectedStation = "ocean";
+    selectedMetric = "sst";
     updateProgress();
-    openAtlas("land");
+    openAtlas("ocean");
   }
   
   function updateRevealHold(time) {
@@ -68,7 +69,7 @@ export function createNotebookController({
     revealHoldFrame = requestAnimationFrame(updateRevealHold);
   }
   
-  function openAtlas(stationId = "land", options = {}) {
+  function openAtlas(stationId = "ocean", options = {}) {
     const stationChanged = selectedStation !== stationId;
     const chapterChanged = dom.atlas.classList.contains("is-visible") && stationChanged;
     if (chapterChanged && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -115,14 +116,14 @@ export function createNotebookController({
   function updateProgress() {
     dom.progressCount.textContent = `${visited.size} of 4 records`;
     dom.questCopy.textContent = missionComplete
-      ? "investigation complete · read the conclusion"
-      : visited.size === STATIONS.length ? "return to professor piko" : "find the four field guides";
+      ? "investigation complete · read the freshwater conclusion"
+      : visited.size === STATIONS.length ? "return to professor piko with the freshwater answer" : "trace pressure, supply, access and observation";
     [...dom.progressDots.children].forEach((dot) => dot.classList.toggle("is-visited", visited.has(dot.dataset.station)));
   }
   
   function renderAtlas() {
     const station = STATIONS.find((item) => item.id === selectedStation) || CONCLUSION;
-    const lockSymbols = { land: "☀", ocean: "≈", rain: "☂", life: "❧", conclusion: "✦" };
+    const lockSymbols = { ocean: "≈", rain: "☂", water: "◉", observations: "⌖", conclusion: "✦" };
     renderStationTabs();
     notebook.setChapter(station.id);
     const collected = notebook.isUnlocked(station.id);
@@ -260,22 +261,22 @@ export function createNotebookController({
     if (station.id === "conclusion") {
       const conclusionLeftPages = [
         {
-          label: "the main question",
-          lead: "What is shared across the Pacific, and what remains local?",
-          copy: "The answer comes from comparing directions without blending the measures. Land and ocean align across observed territories. Rainfall divides. Biodiversity risk adds a separate broad pattern.",
-          highlights: [["shared", "land and ocean direction"], ["local", "rainfall direction"], ["separate", "biodiversity-risk pattern"]],
+          label: "the freshwater question",
+          lead: "What must Pacific islands know to protect freshwater as the ocean warms and rises?",
+          copy: "The surrounding ocean gives a shared warning. The freshwater picture is more fragile: rain differs, access is unequal and the formal observing network is uneven.",
+          highlights: [["21 / 21", "ocean trends upward"], ["15 / 7", "rainfall directions"], ["48% to 100%", "safe-water access"]],
         },
         {
-          label: "how the answer was built",
-          lead: "Agreement, disagreement and a separate warning",
-          copy: "The four chapters play different roles. The first two establish regional agreement, rainfall tests where that agreement ends, and the life chapter widens the final picture without combining scales.",
-          highlights: [["22 / 22", "land upward"], ["21 / 21", "both ocean measures upward"], ["15 / 7", "rainfall split"]],
+          label: "the evidence chain",
+          lead: "Pressure. Supply. Access. Observation.",
+          copy: "Ocean heat and sea level establish the shared pressure. Rainfall describes an uneven source. Drinking-water access reveals unequal starting conditions. Station counts show uneven formal observation.",
+          highlights: [["21 / 21", "both ocean measures"], ["19", "water-access records"], ["18", "station records"]],
         },
         {
-          label: "what the comparison means",
-          lead: "Coordinate the shared work. Design the local work.",
-          copy: "Regional monitoring can follow the common physical direction. Territory planning still needs its own rainfall, exposure, infrastructure and ecological detail.",
-          highlights: [["one region", "shared monitoring"], ["many places", "different water decisions"], ["four records", "kept visible"]],
+          label: "what follows",
+          lead: "Freshwater security is only as strong as its weakest link.",
+          copy: "Protection requires local rainfall evidence, safe and reliable services, storage and groundwater knowledge, and observations that continue long enough to warn people what is changing.",
+          highlights: [["shared", "ocean pressure"], ["unequal", "safe-water access"], ["uneven", "formal observation"]],
         },
       ];
       const page = conclusionLeftPages[selectedNotebookPage];
@@ -299,12 +300,14 @@ export function createNotebookController({
   
     if (selectedNotebookPage === 1) {
       const regionalGuides = {
-        land: "Every bar sits to the right of zero. Read that shared direction first; the differences in bar length show the range of fitted rates.",
         ocean: selectedMetric === "sst"
-          ? "Every observed sea-surface-temperature bar points upward. Compare the spread of rates while keeping the shared direction in view."
-          : "Every observed sea-level bar points upward. The bars show millimetres per year, so read them separately from ocean temperature.",
-        rain: "The bars occupy both sides of zero. Blue marks upward fitted trends and ochre marks downward fitted trends. The split is the central result.",
-        life: "Values below zero mark a lower 2024 endpoint than in 1993. Read the direction and count first, then compare the size of each endpoint change.",
+          ? "Every observed sea-surface-temperature bar points upward. Read the agreement first, but do not treat different trend sizes as a ranking of local impact."
+          : "Every observed sea-level bar points upward. The values are millimetres per year and do not measure local exposure, flooding or damage.",
+        rain: selectedMetric === "rain"
+          ? "The bars sit on both sides of zero: 15 fitted trends point upward and seven point downward. This split is lost in a single regional average."
+          : "Higher values mean wider annual swings around the long-run rainfall record. They do not mean that a territory is wetter overall.",
+        water: "This is a common 2020 comparison of the population using safely managed drinking-water services. It describes access, not a climate effect.",
+        observations: "These are raw counts of WMO-compliant fixed land stations in 2026. The count does not account for territory size, island dispersion or whether a network is sufficient.",
       };
       const rows = filteredTerritories();
       dom.leftPageLabel.textContent = "how to read the regional page";
@@ -316,16 +319,20 @@ export function createNotebookController({
       const formatted = Number.isFinite(value) ? metric.format(value) : "not shown";
       dom.leftPageLabel.textContent = "how to read one territory";
       dom.stationLead.textContent = `${selectedTerritory}: ${metric.label}`;
-      dom.stationExplanation.textContent = station.id === "land"
+      dom.stationExplanation.textContent = metric.detail === "map"
         ? "The selected territory is labelled on the Pacific-centred view. Use its value for comparison; the schematic island marks do not represent land area."
         : "Follow the selected territory across time, then return to the regional page to see whether its direction matches or differs from the wider pattern.";
       dom.leftPageHighlights.innerHTML = `<div><strong>${formatted}</strong><span>${metric.unit}</span></div><div><strong>${DATA.subregion[selectedTerritory]}</strong><span>subregion</span></div>`;
     }
   
-    dom.termName.textContent = selectedMetric === "redlist" ? "Endpoint change" : "Fitted trend";
-    dom.termDefinition.textContent = selectedMetric === "redlist"
-      ? "The 2024 Red List Index value minus the 1993 value. A negative result means the later endpoint is lower."
-      : "The slope of a straight line fitted through the observations. It summarises average direction and rate over the stated period.";
+    const terms = {
+      safeWater: ["Safely managed drinking water", "Drinking water from an improved source that is accessible on premises, available when needed and free from priority contamination."],
+      stations: ["Compliant fixed land station", "A fixed land climate-observation station counted by the official indicator as complying with World Meteorological Organization standards."],
+      rainVariability: ["Annual variability", "The standard deviation of annual rainfall anomalies. A higher value means the annual record swings more widely around its long-run reference."],
+    };
+    const [termName, termDefinition] = terms[selectedMetric] || ["Fitted trend", "The slope of a straight line fitted through the observations. It summarises average direction and rate over the stated period."];
+    dom.termName.textContent = termName;
+    dom.termDefinition.textContent = termDefinition;
   }
   
   function renderChart() {
@@ -342,7 +349,7 @@ export function createNotebookController({
     if (selectedNotebookPage === 1) {
       renderHorizontalBarChart({ dom, metric, rows, selectedTerritory, onSelect: selectTerritory });
     } else {
-      renderNotebookDetail({ dom, stationId: selectedStation, metric, selectedTerritory, territories: filteredTerritories(), data: DATA, climate: CLIMATE, onSelect: selectTerritory });
+      renderNotebookDetail({ dom, stationId: selectedStation, metric, selectedTerritory, territories: filteredTerritories(), data: DATA, climate: CLIMATE, waterStory: WATER_STORY, onSelect: selectTerritory });
     }
   }
   
@@ -360,8 +367,8 @@ export function createNotebookController({
     const resolvedIndex = chapterIndex < 0 ? STATIONS.length : chapterIndex;
     const firstPage = 2 + resolvedIndex * 6 + selectedNotebookPage * 2;
     const labels = station.id === "conclusion"
-      ? ["the answer", "evidence together", "what follows"]
-      : ["field briefing", "regional evidence", "island record"];
+      ? ["the answer", "the evidence chain", "the decisions"]
+      : ["why this chapter matters", "regional evidence", "territory detail"];
     dom.notebookPageLabel.textContent = labels[selectedNotebookPage];
     dom.notebookPageNumbers.textContent = `pages ${firstPage} and ${firstPage + 1}`;
     dom.notebookPagePrev.disabled = selectedNotebookPage === 0;
@@ -371,39 +378,45 @@ export function createNotebookController({
   
   function renderEvidenceWriteup(station) {
     const highlights = station.evidence.highlights.map(([value, label]) => `<li><mark>${value}</mark><span>${label}</span></li>`).join("");
+    const research = station.evidence.research
+      ? `<aside class="research-note"><p><strong>${station.evidence.research.label}:</strong> ${station.evidence.research.text}</p><a href="${station.evidence.research.url}" target="_blank" rel="noreferrer">${station.evidence.research.citation} ↗</a></aside>`
+      : "";
     dom.evidenceWriteup.innerHTML = `
       <p class="evidence-kicker">answer at a glance</p>
       <p class="evidence-question">${station.lead}</p>
-      <p>The chapter begins with these three reference points. Turn the page to see the full regional comparison, then inspect one territory more closely.</p>
+      <p>${station.storyRole}</p>
       <ul class="evidence-highlights">${highlights}</ul>
-      <p class="evidence-direction">regional pattern next →</p>`;
+      <p><strong>Why it matters:</strong> ${station.decision}</p>
+      ${research}
+      <p class="evidence-direction">compare every territory next →</p>`;
     dom.chartNote.textContent = "";
   }
   
   function renderConclusion(page = 0) {
     const spreads = [
       `<p class="conclusion-kicker">the answer</p>
-       <h3>A shared physical direction, not one uniform island story</h3>
-       <p>The main question was simple: which changes are shared across Pacific territories, and which need local answers?</p>
-       <p>Land temperature provides the clearest shared direction, with 22 of 22 fitted trends pointing upward. The ocean agrees: all 21 observed sea-surface-temperature trends and all 21 sea-level trends also point upward.</p>
-       <p>Rainfall breaks that uniformity. Fifteen trends point upward and seven point downward. The Red List Index adds another broad but separate pattern, with 20 of 22 territories ending lower in 2024 than in 1993.</p>
-       <blockquote>The Pacific picture is connected, but it is not interchangeable.</blockquote>`,
-      `<p class="conclusion-kicker">the comparison</p>
-       <h3>Four records answer different parts of the question</h3>
+       <h3>Freshwater is the vulnerable link</h3>
+       <p>Across every observed territory, sea-surface temperature and sea level trend upward. The water surrounding the islands gives a shared warning, while the freshwater people depend on is far less uniform.</p>
+       <p>Rainfall trends split 15 upward and seven downward. Safely managed drinking-water access ranges from 48.11% to 100% in the common 2020 comparison. The 2026 observing record ranges from zero to eight compliant fixed land stations.</p>
+       <p>The records do not measure saltwater intrusion, aquifer condition or service reliability, and they do not prove that climate trends caused current access. They do reveal why freshwater cannot be treated as a secondary issue.</p>
+       <blockquote>Salt water surrounds every island. Secure freshwater cannot be assumed.</blockquote>
+       <aside class="research-note"><p><strong>Published context:</strong> Research using 1951 to 2023 observations from Tarawa and Kiritimati found ocean warming without a significant long-term annual rainfall trend. ENSO variability remained strong, and severe drought remained a challenge.</p><a href="https://doi.org/10.3390/atmos15060666" target="_blank" rel="noreferrer">White, Falkland and Redfern (2024) ↗</a></aside>`,
+      `<p class="conclusion-kicker">the evidence chain</p>
+       <h3>Four records reveal where the warning changes</h3>
        <dl class="signal-ledger">
-         <div><dt>Land</dt><dd><strong>22 of 22 upward.</strong> This is the strongest region-wide agreement in the notebook.</dd></div>
-         <div><dt>Ocean</dt><dd><strong>21 of 21 upward in both measures.</strong> Sea heat and sea level align in direction while keeping different units and periods.</dd></div>
-         <div><dt>Rain</dt><dd><strong>15 up, 7 down.</strong> The split is the result. A single Pacific rainfall direction would erase it.</dd></div>
-         <div><dt>Life</dt><dd><strong>20 of 22 lower.</strong> The endpoint comparison shows a widespread pattern in biodiversity risk beside the physical records.</dd></div>
+         <div><dt>around us</dt><dd><strong>21 of 21 ocean-temperature and sea-level trends point upward.</strong> The direction is shared across the observed territories.</dd></div>
+         <div><dt>from the sky</dt><dd><strong>Rainfall splits 15 upward and 7 downward.</strong> Annual variability also differs.</dd></div>
+         <div><dt>at home</dt><dd><strong>Safe-water access spans 48.11% to 100% across 19 territories in 2020.</strong> Three are below 70%.</dd></div>
+         <div><dt>through the instruments</dt><dd><strong>Compliant station counts span 0 to 8 across 18 territories in 2026.</strong> Five report one or fewer.</dd></div>
        </dl>
-       <p>These measures should meet in the conclusion, not in one combined score. Their directions can be compared without pretending their scales mean the same thing.</p>`,
-      `<p class="conclusion-kicker">the decision</p>
-       <h3>Coordinate the shared work. Design the local work.</h3>
-       <p>The region-wide land and ocean directions support shared monitoring, common heat-preparedness knowledge and coordinated coastal planning.</p>
-       <p>Rainfall requires territory-level decisions. An upward trend and a downward trend lead planners toward different water, drainage and storage questions.</p>
-       <p>Biodiversity risk deserves its own continuing record beside climate monitoring, with the same territory detail rather than one regional average.</p>
-       <p>The next useful step is to connect each territory's trends with local exposure, infrastructure and ecological monitoring while keeping the original measures visible.</p>
-       <p class="conclusion-final">The answer is not one Pacific average. It is one shared direction with many local decisions.</p>`,
+       <p>The most local part of the problem is also the least uniform. The measures remain separate because pressure, supply, access and observation are not interchangeable.</p>`,
+      `<p class="conclusion-kicker">what follows</p>
+       <h3>Protect freshwater before pressure becomes crisis</h3>
+       <p><strong>Watch the coast:</strong> join sea-level records with groundwater and saltwater-intrusion monitoring. <strong>Know the supply:</strong> use territory-specific rainfall, drought and storage records instead of a regional average.</p>
+       <p><strong>Secure access:</strong> protect and extend services that keep drinking water safe, close and available. <strong>Close observation gaps:</strong> maintain the stations, people and data systems needed for warnings and long-term decisions.</p>
+       <p>These are priorities suggested by the evidence, not interventions tested by this analysis. The next dataset should add aquifer condition, catchment storage, service reliability, demand and the geography of each observing network.</p>
+       <aside class="research-note"><p><strong>Published context:</strong> Research in Fiji, Vanuatu and Solomon Islands found that sustained rural water safety planning must be adapted to local governance, community management and ways of sharing knowledge.</p><a href="https://doi.org/10.2166/wh.2024.144" target="_blank" rel="noreferrer">Souter et al. (2024) ↗</a></aside>
+       <p class="conclusion-final">The ocean warning is shared. Freshwater security will be won or lost locally.</p>`,
     ];
     dom.conclusion.innerHTML = `<article class="conclusion-spread">${spreads[page]}</article>`;
     dom.chartNote.textContent = page === 1 ? "Measures are compared by direction and interpretation, not added together." : "";

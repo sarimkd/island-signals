@@ -18,7 +18,7 @@ import { queryAppDom } from "./core/dom.js";
 import { createInputController } from "./core/input-controller.js";
 import { createMusicController } from "./core/music-controller.js";
 
-const [DATA, CLIMATE] = await window.PACIFIC_DATA_PROMISE;
+const [DATA, CLIMATE, WATER_STORY] = await window.PACIFIC_DATA_PROMISE;
 
 const dom = queryAppDom();
 createMusicController({ button: document.querySelector("#music-toggle") });
@@ -38,7 +38,7 @@ const {
   TOWN_CHARACTER_ASSETS,
   validateCharacterProfiles,
   METRICS
-} = createStoryContent({ THREE, DATA, CLIMATE, linearSlope, signed });
+} = createStoryContent({ THREE, DATA, CLIMATE, WATER_STORY, linearSlope, signed });
 const visited = new Set();
 const keyState = new Set();
 const touchState = new Set();
@@ -212,6 +212,7 @@ notebookController = createNotebookController({
   territories,
   DATA,
   CLIMATE,
+  WATER_STORY,
   renderHorizontalBarChart,
   renderNotebookDetail,
   showLayer,
@@ -604,11 +605,11 @@ function beginWorld() {
     openingPlayed = true;
     const professor = interactables.find((item) => item.id === "professor-piko");
     window.setTimeout(() => startDialogue(professor, [
-      { speaker: "Professor Piko Puddlejump", text: "Malia, the village has one question for you: which changes are shared across Pacific territories, and which need local answers?" },
-      { speaker: PLAYER_NAME, text: "So I am looking for agreement, disagreement and what each pattern means for decisions." },
-      { speaker: "Professor Piko Puddlejump", text: "Exactly. Dr. Afi has land temperature, Sela has two ocean measures, Officer Noa has rainfall and Litia has the Red List Index." },
-      { speaker: "Professor Piko Puddlejump", text: "Meet all four, then listen to the rest of the village. Every person and animal sees one small part of how regional patterns meet daily life." },
-      { speaker: PLAYER_NAME, text: "I will keep the measures separate, compare their directions and return with one clear answer." },
+      { speaker: "Professor Piko Puddlejump", text: "Malia, Pacific islands are surrounded by salt water, but daily life depends on freshwater. The ocean is warming and rising. We need to know where freshwater security becomes most exposed." },
+      { speaker: PLAYER_NAME, text: "I will follow the freshwater problem from ocean pressure to rain, safe-water access and the records used to prepare." },
+      { speaker: "Professor Piko Puddlejump", text: "Start with Sela's ocean records. Officer Noa has rainfall, Litia has safely managed drinking water and Dr. Afi has the formal observing network." },
+      { speaker: "Professor Piko Puddlejump", text: "Keep each measure honest. Safe-water access is a starting condition, not something these climate records prove was caused by warming." },
+      { speaker: PLAYER_NAME, text: "I will return with an answer to one question: what must Pacific islands know to protect freshwater?" },
     ], false, () => turnCameraBehindPlayer()), 380);
   }
 }

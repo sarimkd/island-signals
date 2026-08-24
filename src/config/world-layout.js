@@ -26,8 +26,8 @@ export const INSPECTION_LOCATIONS = {
   maxim: [-9.5, 7],
   windmill: [19, 13],
   harbor: [24, -23],
-  land: [-15.5, -8.2],
   ocean: [14, -21.5],
   rain: [-15.5, 10.5],
-  life: [8.5, 13],
+  water: [8.5, 13],
+  observations: [-15.5, -8.2],
 };

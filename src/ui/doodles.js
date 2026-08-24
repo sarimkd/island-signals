@@ -43,8 +43,20 @@ export function createNotebookDoodle(kind = "note", index = 0) {
     ellipse(32,29,25,26,fill); ellipse(18,29,10,13); ellipse(46,29,10,13); ellipse(32,35,16,11); path("M24 46 C18 54 10 48 14 42");
   } else if (hoofed.has(kind)) {
     ellipse(30,31,30,19,fill); ellipse(46,26,16,15,fill); line(20,39,18,52); line(31,40,31,52); line(41,38,43,51); if(kind==="cow"||kind==="deer"){line(42,18,38,10);line(49,18,54,10);} if(kind==="pig"||kind==="hog") ellipse(51,29,7,5); if(kind==="beaver") polygon([[13,32],[5,27],[5,40]],fill);
-  } else if (kind === "land" || kind === "ocean" || kind === "rain" || kind === "life") {
-    path("M10 45 C20 38 27 48 35 39 C44 30 50 38 56 25"); line(10,49,56,49); if(kind==="rain"){path("M18 21 C20 12 36 12 39 21 C48 20 50 32 41 34 L18 34 C9 32 10 22 18 21"); [22,31,40].forEach(x=>line(x,38,x-3,45));}
+  } else if (kind === "ocean" || kind === "rain" || kind === "water" || kind === "observations") {
+    if (kind === "rain") {
+      path("M18 21 C20 12 36 12 39 21 C48 20 50 32 41 34 L18 34 C9 32 10 22 18 21");
+      [22,31,40].forEach(x=>line(x,38,x-3,45));
+    } else if (kind === "water") {
+      path("M32 8 C27 19 18 28 18 37 C18 47 25 52 32 52 C39 52 46 47 46 37 C46 28 37 19 32 8 Z", fill);
+      line(24,39,40,39);
+    } else if (kind === "observations") {
+      line(32,10,32,49); line(19,49,45,49); line(23,22,41,22); line(26,22,22,49); line(38,22,42,49);
+      ellipse(32,13,8,8,fill);
+    } else {
+      path("M7 24 C15 17 23 31 32 24 C41 17 49 31 58 24");
+      path("M7 37 C15 30 23 44 32 37 C41 30 49 44 58 37");
+    }
   } else if (kind === "research" || kind === "person") {
     ellipse(32,19,15,15,fill); path("M17 49 C18 32 46 32 47 49",fill); line(23,42,41,42);
   } else {

@@ -32,7 +32,7 @@ export function createDialogueController({
   let activeDialogue = null;
   let dialogueGestureTimer = 0;
 
-  const dialogueFocusPattern = /(warming|rising seas?|rising waterlines?|rainfall|biodiversity|local decisions|shared direction|long records?|missing data|field notes?|compare|evidence|shade|waterline|adaptation|climate records?)/gi;
+  const dialogueFocusPattern = /(warming ocean|rising seas?|rising waterlines?|rainfall|freshwater|safe water|safely managed water|water access|water security|observing network|stations?|shared direction|long records?|missing data|field notes?|compare|evidence|waterline|climate records?)/gi;
   const dialogueFocusCheck = new RegExp(dialogueFocusPattern.source, "i");
   
   function renderFocusedText(text) {

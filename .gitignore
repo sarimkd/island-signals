@@ -17,6 +17,10 @@ data/intermediate/
 data/README.md
 analysis/README.md
 analysis/independent_topic_scan.md
+analysis/*scan*.md
+analysis/internal/
+analysis/review/
+analysis/notes/
 
 # Challenge datasets not used in this entry
 data/source/challenge-2026/*
@@ -24,7 +28,8 @@ data/source/challenge-2026/*
 !data/source/challenge-2026/mean-sea-surface-temperature-anomalies.csv
 !data/source/challenge-2026/sea-level-anomalies.csv
 !data/source/challenge-2026/rainfall-anomalies.csv
-!data/source/challenge-2026/red-list-index.csv
+!data/source/challenge-2026/proportion-of-population-using-safely-managed-drinking-water-services.csv
+!data/source/challenge-2026/meteorological-monitoring-network.csv
 
 # Local asset alternatives and superseded copies
 assets/models/kenney/

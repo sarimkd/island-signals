@@ -1,6 +1,6 @@
 import { createNotebookDoodle } from "./doodles.js";
 
-const CHAPTERS = ["land", "ocean", "rain", "life", "conclusion"];
+const CHAPTERS = ["ocean", "rain", "water", "observations", "conclusion"];
 const NOTE_PAPERS = ["#fff0a8", "#d9eef0", "#f8d9d0", "#e1edd0", "#f4e1bd", "#e5dcf2"];
 const NOTE_TILTS = [-1.7, .9, -.45, 1.35, -.85, .35];
 
@@ -14,7 +14,7 @@ export function createFieldNotebook({ root }) {
   const tabs = root.querySelector("#station-tabs");
   const notes = root.querySelector("#notebook-observations");
   const noteCount = root.querySelector("#notebook-note-count");
-  let activeChapter = "land";
+  let activeChapter = "ocean";
 
   function isUnlocked(id) {
     return unlocked.has(id);
@@ -22,12 +22,12 @@ export function createFieldNotebook({ root }) {
 
   function unlockChapter(id) {
     if (CHAPTERS.includes(id)) unlocked.add(id);
-    if (["land", "ocean", "rain", "life"].every((chapter) => unlocked.has(chapter))) unlocked.add("conclusion");
+    if (["ocean", "rain", "water", "observations"].every((chapter) => unlocked.has(chapter))) unlocked.add("conclusion");
     renderStatus();
   }
 
   function setChapter(id) {
-    activeChapter = CHAPTERS.includes(id) ? id : "land";
+    activeChapter = CHAPTERS.includes(id) ? id : "ocean";
     renderNotes();
   }
 

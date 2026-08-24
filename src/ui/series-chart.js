@@ -59,31 +59,29 @@ function renderMap({ dom, metric, territories, selectedTerritory, coords, onSele
   });
 }
 
-function renderSeries({ dom, metric, stationId, selectedTerritory, data }) {
-  const series = stationId === "rain" ? data.extra[selectedTerritory]?.rainfall_series
-    : stationId === "life" ? data.redlist_series[selectedTerritory]
-      : data.extra[selectedTerritory]?.sea_level_series;
+function renderSeries({ dom, metric, selectedTerritory }) {
+  const series = metric.series?.(selectedTerritory) || [];
   const rows = (series || []).filter((point) => Number.isFinite(point[0]) && Number.isFinite(point[1]));
   const width = 820;
   const height = 430;
   const margin = { top: 34, right: 38, bottom: 48, left: 76 };
-  const values = rows.map((point) => point[1]);
-  const domain = niceDomain(Math.min(...values), Math.max(...values), 5);
-  const firstYear = rows[0]?.[0] || 0;
-  const lastYear = rows.at(-1)?.[0] || 1;
-  const x = (year) => margin.left + ((year - firstYear) / Math.max(1, lastYear - firstYear)) * (width - margin.left - margin.right);
-  const y = (value) => margin.top + ((domain.max - value) / Math.max(.0001, domain.max - domain.min)) * (height - margin.top - margin.bottom);
   const sketch = rough.svg(dom.chart);
 
   dom.chartTitle.textContent = `${selectedTerritory}, year by year`;
-  dom.chartSubtitle.textContent = stationId === "rain" ? "Annual rainfall anomaly" : stationId === "life" ? "Red List Index" : "Satellite-era sea-level anomaly";
-  dom.chartNote.textContent = "The uneven line is the annual record. The chapter overview summarises its overall direction.";
+  dom.chartSubtitle.textContent = metric.detailSubtitle || metric.subtitle;
+  dom.chartNote.textContent = metric.detailNote || "The uneven line is the annual record. The chapter overview summarises its overall direction.";
   dom.chart.replaceChildren();
   dom.chart.setAttribute("viewBox", `0 0 ${width} ${height}`);
   if (!rows.length) {
     dom.chart.append(textNode("No annual series is available for this selection.", width / 2, height / 2, "chart-empty", "middle"));
     return;
   }
+  const values = rows.map((point) => point[1]);
+  const domain = niceDomain(Math.min(...values), Math.max(...values), 5);
+  const firstYear = rows[0][0];
+  const lastYear = rows.at(-1)[0];
+  const x = (year) => margin.left + ((year - firstYear) / Math.max(1, lastYear - firstYear)) * (width - margin.left - margin.right);
+  const y = (value) => margin.top + ((domain.max - value) / Math.max(.0001, domain.max - domain.min)) * (height - margin.top - margin.bottom);
   Array.from({ length: domain.count + 1 }, (_, index) => domain.min + domain.step * index).forEach((tick, index) => {
     dom.chart.append(sketch.line(margin.left, y(tick), width - margin.right, y(tick), { seed: 620 + index, stroke: "rgba(49,94,84,.16)", strokeWidth: .8, roughness: .9 }));
     dom.chart.append(textNode(formatTick(tick), margin.left - 12, y(tick) + 4, "chart-tick", "end"));
@@ -97,7 +95,7 @@ function renderSeries({ dom, metric, stationId, selectedTerritory, data }) {
 }
 
 export function renderNotebookDetail(options) {
-  const { dom, stationId, metric, selectedTerritory, territories, data, onSelect } = options;
+  const { dom, metric, selectedTerritory, territories, data, onSelect } = options;
   const value = metric.value(selectedTerritory);
   dom.selectedReading.replaceChildren();
   const reading = document.createElement("strong");
@@ -105,7 +103,7 @@ export function renderNotebookDetail(options) {
   const label = document.createElement("span");
   label.textContent = selectedTerritory;
   dom.selectedReading.append(reading, label);
-  if (stationId === "land" || (stationId === "ocean" && metric.label.includes("surface"))) {
+  if (metric.detail === "map") {
     renderMap({ ...options, territories, selectedTerritory, coords: data.coords, onSelect });
   } else {
     renderSeries({ ...options, selectedTerritory, data });

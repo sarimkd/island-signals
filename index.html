@@ -3,15 +3,15 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="An explorable Pacific climate data story." />
+    <meta name="description" content="An explorable Pacific data story about one ocean and unequal freshwater security." />
     <title>Island Signals</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Kalam:wght@400;700&family=Patrick+Hand&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles/base.css?v=ui-5" />
+    <link rel="stylesheet" href="styles/base.css?v=freshwater-1" />
     <link rel="stylesheet" href="styles/components/dialogue.css?v=5" />
-    <link rel="stylesheet" href="styles/components/notebook.css?v=draft-9" />
+    <link rel="stylesheet" href="styles/components/notebook.css?v=water-story-1" />
     <script type="importmap">
       {
         "imports": {
@@ -23,16 +23,16 @@
     </script>
   </head>
   <body>
-    <main id="experience" aria-label="Island Signals interactive climate story">
+    <main id="experience" aria-label="Island Signals interactive freshwater data story">
       <canvas id="world" aria-label="An explorable Pacific climate village"></canvas>
       <div class="world-wash" aria-hidden="true"></div>
 
       <header class="hud-top">
         <div class="field-progress" aria-live="polite">
           <span class="progress-title">Island Signals</span>
-          <b class="progress-topic">Shared signals, local differences</b>
-          <p class="progress-question">Which changes are shared across Pacific territories, and which need local answers?</p>
-          <small id="quest-copy">find the four field guides</small>
+          <b class="progress-topic">One ocean. Unequal freshwater security.</b>
+          <p class="progress-question">What must Pacific islands know to protect freshwater as the ocean warms and rises?</p>
+          <small id="quest-copy">trace pressure, supply, access and observation</small>
           <div class="progress-record-row">
             <strong id="progress-count">0 of 4 records</strong>
             <div class="progress-dots" id="progress-dots" aria-hidden="true"></div>
@@ -88,9 +88,9 @@
               <path class="doodle-wave" d="M18 151 C36 143 49 159 67 151 C85 143 98 159 116 151 C134 143 147 159 165 151 C183 143 196 159 212 151"></path>
             </svg>
           </div>
-          <p class="welcome-kicker">An interactive climate story</p>
+          <p class="welcome-kicker">A Pacific freshwater investigation</p>
           <h1 id="welcome-title">Island Signals</h1>
-          <p class="welcome-deck">Join Malia in the village, meet four local guides and investigate what the Pacific climate records say together.</p>
+          <p class="welcome-deck">Pacific islands are surrounded by salt water, but daily life depends on freshwater. Join Malia to investigate a rising ocean, divided rainfall, unequal safe-water access and the gaps in observing what comes next.</p>
           <div class="welcome-actions">
             <button class="button-main" id="enter-world" type="button">Explore the village</button>
             <button class="button-secondary" id="enter-atlas" type="button">Open the field notebook</button>
@@ -101,7 +101,7 @@
             <span><kbd>Space</kbd> jump</span>
             <span><kbd>E</kbd> talk</span>
           </div>
-          <p class="welcome-note">Each evidence chapter is unlocked by finding its field guide.</p>
+          <p class="welcome-note">Four field guides reveal where the freshwater warning becomes most urgent.</p>
         </article>
       </section>
 
@@ -109,10 +109,12 @@
         <article class="credits-card">
           <button class="icon-close" id="credits-close" type="button" aria-label="Close information">×</button>
           <p class="panel-kicker">about this project</p>
-          <h2 id="credits-title">A Pacific data investigation</h2>
+          <h2 id="credits-title">A Pacific freshwater investigation</h2>
           <p>Built for the Pacific DataViz Challenge by Sarim Khan.</p>
-          <p>I chose an explorable village so the analysis is not simply read and forgotten. It connects the Pacific's widespread warming signal and local differences with the people, wildlife and places living with climate change.</p>
+          <p>I chose an explorable village because freshwater security is lived locally. The story follows a shared ocean signal into different rainfall records, unequal safe-water access and an uneven observing network.</p>
           <p>3D models and environment assets are from Kenney asset packs. Data visualizations use the official challenge datasets.</p>
+          <p class="credits-sources">Context: <a href="https://pacificdata.org/dashboard/sdg-6-clean-water-and-sanitation" target="_blank" rel="noreferrer">Pacific Data Hub SDG 6</a> and <a href="https://spc.int/updates/news/media-release/2024/06/pacific-island-atolls-fixed-on-water-security" target="_blank" rel="noreferrer">Pacific Community coastal aquifer work</a>.</p>
+          <p class="credits-sources">Peer-reviewed research: <a href="https://doi.org/10.3390/atmos15060666" target="_blank" rel="noreferrer">White, Falkland and Redfern (2024)</a> and <a href="https://doi.org/10.2166/wh.2024.144" target="_blank" rel="noreferrer">Souter et al. (2024)</a>.</p>
         </article>
       </section>
 
@@ -163,7 +165,7 @@
                 <span class="notebook-lock-mark" aria-hidden="true">⌁</span>
                 <p class="panel-kicker">field note not collected</p>
                 <h3 id="notebook-lock-title">Find Dr. Afi Leka</h3>
-                <p id="notebook-lock-copy">Talk to the land climate researcher to collect this evidence chapter.</p>
+                <p id="notebook-lock-copy">Talk to the field guide to collect this evidence chapter.</p>
                 <button type="button" id="notebook-lock-close">return to the village</button>
               </div>
               <div class="notebook-lock-doodle-page" aria-hidden="true">
@@ -193,7 +195,7 @@
             <section class="atlas-data" aria-label="Interactive chart">
               <nav class="notebook-page-nav" aria-label="Pages in this evidence chapter">
                 <button id="notebook-page-prev" type="button" aria-label="Previous notebook spread">‹</button>
-                <span><strong id="notebook-page-label">regional pattern</strong><small id="notebook-page-numbers">pages 2 and 3</small></span>
+                <span><strong id="notebook-page-label">why this chapter matters</strong><small id="notebook-page-numbers">pages 2 and 3</small></span>
                 <button id="notebook-page-next" type="button" aria-label="Next notebook spread">›</button>
               </nav>
               <article class="evidence-writeup" id="evidence-writeup" hidden></article>
@@ -253,7 +255,7 @@
           </div>
           <p class="loading-eyebrow">preparing your Pacific field notebook</p>
           <strong>Drawing the island</strong>
-          <p class="loading-intro">A village of climate records, local observations and four questions is taking shape.</p>
+          <p class="loading-intro">A village of water records, local observations and four field guides is taking shape.</p>
           <div class="loading-track"><span id="loading-bar"></span></div>
           <div class="loading-status"><span id="loading-copy">sketching the coastline</span><b id="loading-percent">0%</b></div>
         </div>
@@ -275,8 +277,9 @@
       window.PACIFIC_DATA_PROMISE = Promise.all([
         loadChallengeObject("data/processed/territory-data.js", "DATA"),
         loadChallengeObject("data/processed/climate-series.js", "CLIMATE"),
+        loadChallengeObject("data/processed/water-story-data.js", "WATER_STORY"),
       ]);
     </script>
-    <script type="module" src="src/main.js?v=interaction-pass-1"></script>
+    <script type="module" src="src/main.js?v=water-story-1"></script>
   </body>
 </html>
