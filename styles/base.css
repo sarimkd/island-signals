@@ -117,6 +117,61 @@ button:focus-visible {
 .hud-button-primary { border-color: rgba(38,99,85,.38); background: var(--leaf-dark); color: #fff8e7; }
 .hud-button-primary:hover { background: #1e564a; }
 
+.analysis-shortcut {
+  position: absolute;
+  z-index: 14;
+  top: 1rem;
+  left: 50%;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: .65rem;
+  width: min(29rem, calc(100vw - 2rem));
+  border: 1px solid rgba(255, 255, 255, .58);
+  border-radius: 1.15rem;
+  padding: .62rem .68rem;
+  background: rgba(247, 240, 223, .93);
+  box-shadow: 0 14px 42px rgba(25, 70, 63, .22);
+  backdrop-filter: blur(18px) saturate(1.08);
+  -webkit-backdrop-filter: blur(18px) saturate(1.08);
+  transform: translateX(-50%);
+  pointer-events: auto;
+  animation: analysis-shortcut-in .42s var(--ease) both;
+}
+.analysis-shortcut kbd {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 0;
+  border-radius: .72rem;
+  background: var(--leaf-dark);
+  color: #fff8e7;
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .14);
+  font-size: .85rem;
+  font-weight: 800;
+}
+.analysis-shortcut > div { display: grid; gap: .08rem; }
+.analysis-shortcut strong { font: 650 .82rem/1.15 "DM Sans", system-ui, sans-serif; }
+.analysis-shortcut span { color: var(--muted); font-size: .68rem; line-height: 1.3; }
+.analysis-shortcut button {
+  display: grid;
+  place-items: center;
+  width: 1.8rem;
+  height: 1.8rem;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+.analysis-shortcut button:hover { background: rgba(24, 63, 62, .09); color: var(--ink); }
+@keyframes analysis-shortcut-in {
+  from { opacity: 0; transform: translate(-50%, -10px) scale(.98); }
+  to { opacity: 1; transform: translate(-50%, 0) scale(1); }
+}
+
 .field-progress {
   position: absolute;
   z-index: 8;
@@ -518,6 +573,7 @@ kbd {
 .touch-controls { display: none; }
 
 @media (max-width: 900px) {
+  .analysis-shortcut { top: 5.15rem; width: min(25rem, calc(100vw - 1rem)); }
   .atlas-card { height: calc(100vh - 1rem); border-radius: 1.2rem; }
   .atlas-layout { grid-template-columns: 13rem minmax(0,1fr); }
   .station-narrative { padding: 1rem; }

@@ -28,6 +28,7 @@ export function createNotebookController({
   let pageTurnTimer = 0;
   let revealHoldStartedAt = 0;
   let revealHoldFrame = 0;
+  const compactNotebook = window.matchMedia("(max-width: 900px)");
 
   function resetRevealHold() {
     cancelAnimationFrame(revealHoldFrame);
@@ -62,9 +63,9 @@ export function createNotebookController({
     revealHoldFrame = requestAnimationFrame(updateRevealHold);
   }
   
-  function startRevealHold() {
+  function startRevealHold(startedAt = performance.now()) {
     if (revealHoldStartedAt || notebook.isUnlocked("conclusion") || !dom.atlas.classList.contains("is-visible")) return;
-    revealHoldStartedAt = performance.now();
+    revealHoldStartedAt = startedAt;
     dom.notebookRevealControl.classList.add("is-holding");
     revealHoldFrame = requestAnimationFrame(updateRevealHold);
   }
@@ -273,7 +274,7 @@ export function createNotebookController({
           highlights: [["21 / 21", "both ocean measures"], ["19", "water-access records"], ["18", "station records"]],
         },
         {
-          label: "what follows",
+          label: "what the evidence supports",
           lead: "Freshwater security is only as strong as its weakest link.",
           copy: "Protection requires local rainfall evidence, safe and reliable services, storage and groundwater knowledge, and observations that continue long enough to warn people what is changing.",
           highlights: [["shared", "ocean pressure"], ["unequal", "safe-water access"], ["uneven", "formal observation"]],
@@ -370,10 +371,15 @@ export function createNotebookController({
       ? ["the answer", "the evidence chain", "the decisions"]
       : ["why this chapter matters", "regional evidence", "territory detail"];
     dom.notebookPageLabel.textContent = labels[selectedNotebookPage];
-    dom.notebookPageNumbers.textContent = `pages ${firstPage} and ${firstPage + 1}`;
+    dom.notebookPageNumbers.textContent = compactNotebook.matches
+      ? `sheet ${1 + resolvedIndex * 3 + selectedNotebookPage}`
+      : `pages ${firstPage} and ${firstPage + 1}`;
     dom.notebookPagePrev.disabled = selectedNotebookPage === 0;
     dom.notebookPageNext.disabled = selectedNotebookPage === 2 && !guidedNotebookItem;
-    dom.notebookPageNext.setAttribute("aria-label", selectedNotebookPage === 2 && guidedNotebookItem ? "Continue conversation with field guide" : "Next notebook spread");
+    dom.notebookPagePrev.setAttribute("aria-label", compactNotebook.matches ? "Previous notebook sheet" : "Previous notebook spread");
+    dom.notebookPageNext.setAttribute("aria-label", selectedNotebookPage === 2 && guidedNotebookItem
+      ? "Continue conversation with field guide"
+      : compactNotebook.matches ? "Forward one notebook sheet" : "Forward one notebook spread");
   }
   
   function renderEvidenceWriteup(station) {
@@ -388,7 +394,7 @@ export function createNotebookController({
       <ul class="evidence-highlights">${highlights}</ul>
       <p><strong>Why it matters:</strong> ${station.decision}</p>
       ${research}
-      <p class="evidence-direction">compare every territory next →</p>`;
+      <p class="evidence-direction">compare every territory →</p>`;
     dom.chartNote.textContent = "";
   }
   
@@ -410,11 +416,11 @@ export function createNotebookController({
          <div><dt>through the instruments</dt><dd><strong>Compliant station counts span 0 to 8 across 18 territories in 2026.</strong> Five report one or fewer.</dd></div>
        </dl>
        <p>The most local part of the problem is also the least uniform. The measures remain separate because pressure, supply, access and observation are not interchangeable.</p>`,
-      `<p class="conclusion-kicker">what follows</p>
+      `<p class="conclusion-kicker">the practical reading</p>
        <h3>Protect freshwater before pressure becomes crisis</h3>
        <p><strong>Watch the coast:</strong> join sea-level records with groundwater and saltwater-intrusion monitoring. <strong>Know the supply:</strong> use territory-specific rainfall, drought and storage records instead of a regional average.</p>
        <p><strong>Secure access:</strong> protect and extend services that keep drinking water safe, close and available. <strong>Close observation gaps:</strong> maintain the stations, people and data systems needed for warnings and long-term decisions.</p>
-       <p>These are priorities suggested by the evidence, not interventions tested by this analysis. The next dataset should add aquifer condition, catchment storage, service reliability, demand and the geography of each observing network.</p>
+       <p>Together, the records support one practical reading: freshwater planning must remain territorial even when the surrounding ocean pressure is regional. This analysis does not rank interventions or attribute current service gaps to climate change.</p>
        <aside class="research-note"><p><strong>Published context:</strong> Research in Fiji, Vanuatu and Solomon Islands found that sustained rural water safety planning must be adapted to local governance, community management and ways of sharing knowledge.</p><a href="https://doi.org/10.2166/wh.2024.144" target="_blank" rel="noreferrer">Souter et al. (2024) ↗</a></aside>
        <p class="conclusion-final">The ocean warning is shared. Freshwater security will be won or lost locally.</p>`,
     ];
@@ -440,6 +446,9 @@ export function createNotebookController({
     selectedNotebookPage += 1;
     animatePageTurn();
     renderAtlas();
+  });
+  compactNotebook.addEventListener?.("change", () => {
+    if (dom.atlas.classList.contains("is-visible")) renderAtlas();
   });
   function updateNotebookZoom(delta) {
     notebookZoom = THREE.MathUtils.clamp(Math.round((notebookZoom + delta) * 10) / 10, .9, 1.3);

@@ -601,6 +601,7 @@ function applyInspectionPosition() {
 function beginWorld() {
   worldStarted = true;
   showLayer(dom.welcome, false);
+  dom.analysisShortcut.hidden = false;
   if (!openingPlayed) {
     openingPlayed = true;
     const professor = interactables.find((item) => item.id === "professor-piko");

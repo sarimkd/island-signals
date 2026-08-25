@@ -62,7 +62,7 @@ export function createDialogueController({
     dom.dialogueRole.textContent = (line.speaker === PLAYER_NAME ? "field researcher" : activeDialogue.item?.role || "field conversation").toLowerCase();
     renderFocusedText(line.text);
     const lastLine = activeDialogue.index === activeDialogue.lines.length - 1;
-    dom.dialogueNext.setAttribute("aria-label", lastLine ? "finish conversation" : "next line");
+    dom.dialogueNext.setAttribute("aria-label", lastLine ? "finish conversation" : "continue dialogue");
     playDialogueGesture(line);
   }
   

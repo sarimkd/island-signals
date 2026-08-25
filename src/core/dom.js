@@ -8,6 +8,8 @@ export function queryAppDom(root = document) {
     welcome: "#welcome-layer",
     help: "#help-layer",
     credits: "#credits-layer",
+    analysisShortcut: "#analysis-shortcut",
+    analysisShortcutClose: "#analysis-shortcut-close",
     atlas: "#atlas-layer",
     notebookCard: ".notebook-card",
     stationLabels: "#station-labels",

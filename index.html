@@ -9,9 +9,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Kalam:wght@400;700&family=Patrick+Hand&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles/base.css?v=freshwater-1" />
+    <link rel="stylesheet" href="styles/base.css?v=water-scope-2" />
     <link rel="stylesheet" href="styles/components/dialogue.css?v=5" />
-    <link rel="stylesheet" href="styles/components/notebook.css?v=water-story-1" />
+    <link rel="stylesheet" href="styles/components/notebook.css?v=top-spiral-1" />
     <script type="importmap">
       {
         "imports": {
@@ -46,6 +46,15 @@
         </nav>
       </header>
 
+      <aside class="analysis-shortcut" id="analysis-shortcut" aria-live="polite" hidden>
+        <kbd>E</kbd>
+        <div>
+          <strong>Open the complete analysis</strong>
+          <span>Hold E for 5 seconds to open the field notebook and reveal every chapter.</span>
+        </div>
+        <button id="analysis-shortcut-close" type="button" aria-label="Dismiss notebook shortcut">×</button>
+      </aside>
+
       <div class="station-labels" id="station-labels" aria-label="Data stations"></div>
       <div class="nearby-callout" id="nearby-callout" hidden>
         <span class="nearby-caller" id="nearby-caller">sela vuki</span>
@@ -64,7 +73,7 @@
         </div>
         <p id="dialogue-text"></p>
         <span class="dialogue-key-hint" aria-hidden="true"><kbd>enter</kbd> or <kbd>e</kbd></span>
-        <button id="dialogue-next" type="button" aria-label="next line"><span aria-hidden="true">next</span></button>
+        <button id="dialogue-next" type="button" aria-label="continue dialogue"><span aria-hidden="true">continue</span></button>
       </aside>
 
       <div class="touch-controls" id="touch-controls" aria-label="touch controls">
@@ -90,7 +99,7 @@
           </div>
           <p class="welcome-kicker">A Pacific freshwater investigation</p>
           <h1 id="welcome-title">Island Signals</h1>
-          <p class="welcome-deck">Pacific islands are surrounded by salt water, but daily life depends on freshwater. Join Malia to investigate a rising ocean, divided rainfall, unequal safe-water access and the gaps in observing what comes next.</p>
+          <p class="welcome-deck">Pacific islands are surrounded by salt water, but daily life depends on freshwater. Join Malia to investigate a rising ocean, divided rainfall, unequal safe-water access and uneven formal observation.</p>
           <div class="welcome-actions">
             <button class="button-main" id="enter-world" type="button">Explore the village</button>
             <button class="button-secondary" id="enter-atlas" type="button">Open the field notebook</button>
@@ -129,9 +138,10 @@
             <div><kbd>Space</kbd><strong>Jump</strong><span>Clear small changes in the route.</span></div>
             <div><kbd>E</kbd><strong>Talk</strong><span>Speak with someone nearby.</span></div>
             <div><kbd>N</kbd><strong>Notebook</strong><span>Review records you have collected.</span></div>
+            <div><kbd>E</kbd><strong>Reveal all data</strong><span>Hold for 5 seconds from the village.</span></div>
             <div><kbd>Mouse</kbd><strong>Look around</strong><span>Drag to turn. Scroll to zoom.</span></div>
           </div>
-          <p>Press N to open the notebook. Each field guide unlocks one evidence chapter. Other conversations add local observations only after a relevant detail has actually been shared.</p>
+          <p>Press N to review the notebook. Explore to unlock each chapter, or hold E for 5 seconds to open the notebook and reveal the complete analysis immediately.</p>
         </article>
       </section>
 
@@ -158,6 +168,11 @@
           </header>
 
           <nav class="station-tabs" id="station-tabs" aria-label="Notebook chapters"></nav>
+
+          <div class="notebook-top-binding" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
 
           <div class="atlas-layout">
             <section class="notebook-lock" id="notebook-lock" hidden>
@@ -196,7 +211,7 @@
               <nav class="notebook-page-nav" aria-label="Pages in this evidence chapter">
                 <button id="notebook-page-prev" type="button" aria-label="Previous notebook spread">‹</button>
                 <span><strong id="notebook-page-label">why this chapter matters</strong><small id="notebook-page-numbers">pages 2 and 3</small></span>
-                <button id="notebook-page-next" type="button" aria-label="Next notebook spread">›</button>
+                <button id="notebook-page-next" type="button" aria-label="Forward one notebook spread">›</button>
               </nav>
               <article class="evidence-writeup" id="evidence-writeup" hidden></article>
               <div class="filter-row">
@@ -215,7 +230,7 @@
                 <div class="territory-browser">
                   <button class="territory-scroll" id="territory-prev" type="button" aria-label="Previous territories">‹</button>
                   <div class="territory-tabs" id="territory-tabs"></div>
-                  <button class="territory-scroll" id="territory-next" type="button" aria-label="Next territories">›</button>
+                  <button class="territory-scroll" id="territory-next" type="button" aria-label="More territories">›</button>
                 </div>
               </div>
 
@@ -280,6 +295,6 @@
         loadChallengeObject("data/processed/water-story-data.js", "WATER_STORY"),
       ]);
     </script>
-    <script type="module" src="src/main.js?v=water-story-1"></script>
+    <script type="module" src="src/main.js?v=water-scope-2"></script>
   </body>
 </html>

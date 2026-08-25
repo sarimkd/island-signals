@@ -68,16 +68,16 @@ export function createStoryContent({ THREE, DATA, CLIMATE, WATER_STORY, linearSl
 
   const GUIDE_MALIA_LINES = {
     ocean: ["Let me compare ocean heat and sea level without combining their units.", "Both measures move upward across every observed territory.", "That is the shared pressure. Now I need to follow the freshwater."],
-    rain: ["Let me compare direction and annual variability.", "A regional average would erase the differences freshwater planning depends on.", "Rain does not follow one Pacific path. Next I need to see the water people can safely use."],
+    rain: ["Let me compare direction and annual variability.", "A regional average would erase the differences freshwater planning depends on.", "Rain does not follow one Pacific path. I need to compare that supply with the water people can safely use."],
     water: ["Show me the common 2020 comparison first.", "The gap is not a technical detail. It describes who can use safe water.", "Freshwater security begins from unequal conditions. Now I need to know how clearly local change can be observed."],
     observations: ["Let me count the formal stations without calling the count a measure of adequacy.", "Five reporting territories have one compliant fixed land station or fewer.", "Now the warning is complete: shared ocean pressure, different rain, unequal access and uneven observation."],
   };
 
   const ANIMAL_NOTE_CHAPTER = {
     beaver: "rain", bee: "observations", bunny: "rain", cat: "water", caterpillar: "water", chick: "water",
-    cow: "water", crab: "ocean", deer: "water", dog: "conclusion", elephant: "rain", fish: "ocean",
+    cow: "water", crab: "ocean", deer: "water", dog: "water", elephant: "rain", fish: "ocean",
     fox: "observations", giraffe: "observations", hog: "water", koala: "water", lion: "observations", monkey: "water",
-    panda: "water", parrot: "rain", penguin: "ocean", pig: "water", polar: "ocean", tiger: "observations",
+    panda: "water", parrot: "rain", penguin: "ocean", pig: "water", polar: "ocean", tiger: "ocean",
   };
 
   const TOWN_NOTE_CHAPTER = {
@@ -90,12 +90,12 @@ export function createStoryContent({ THREE, DATA, CLIMATE, WATER_STORY, linearSl
     bee: { name: "Aunty Bzz", sound: "Bzzzz", habit: "I run the smallest air-traffic service in town.", clue: "I can notice a dry flower bed, but a station keeps the long record people can compare.", punch: "Please rate your flight. Five flowers preferred." },
     bunny: { name: "Nibbles", sound: "Sniff sniff", habit: "I count clouds until a carrot interrupts me.", clue: "Some gardens need more watering now, but the rain record differs by island.", punch: "My climate model is mostly carrots. It has excellent crunch resolution." },
     cat: { name: "Mr. Miso", sound: "Meow meow", habit: "I supervise the village from whichever chair is warmest.", clue: "A full bowl is not the same as water that is safe and available whenever it is needed.", punch: "Meeting adjourned. I must sit on something important." },
-    caterpillar: { name: "Captain Wiggle", sound: "Wiggle wiggle", habit: "I measure distance in leaves.", clue: "Leaves show dry conditions quickly, but soil and stored water decide how long plants cope.", punch: "My five-year plan is to become dramatically airborne." },
+    caterpillar: { name: "Captain Wiggle", sound: "Wiggle wiggle", habit: "I measure distance in leaves.", clue: "Leaves show dry conditions quickly, but soil and stored water decide how long plants cope.", punch: "My grand plan is to become dramatically airborne." },
     chick: { name: "Peep", sound: "Peep peep", habit: "I wake up before the rooster and take full credit.", clue: "Tiny animals also need clean water close by. Distance changes what access feels like.", punch: "I am not small. The island is unusually large." },
     cow: { name: "Mabel Moo", sound: "Moooo", habit: "I keep the grass short in one very specific patch.", clue: "Dry spells change where the greenest grazing survives.", punch: "My research is peer reviewed by three goats. We have no goats." },
     crab: { name: "Sir Sideways", sound: "Click click", habit: "Forward is a fad. Sideways has worked for millions of years.", clue: "A rising waterline makes the safe strip of beach narrower.", punch: "I tried walking straight once. Terrible branding." },
     deer: { name: "Fern", sound: "Huff", habit: "I know every quiet path and exactly which flowers are off limits.", clue: "Roots and ground cover slow runoff, giving rain more time to enter the soil.", punch: "If anyone asks, I was never near the hibiscus." },
-    dog: { name: "Koa", sound: "Woof woof", habit: "I patrol the path. The path has not escaped yet.", clue: "People notice change locally before a regional average explains it.", punch: "I found a stick. The investigation is now extremely serious." },
+    dog: { name: "Koa", sound: "Woof woof", habit: "I patrol the path. The path has not escaped yet.", clue: "A low rain tank or dry stream is noticed locally, even when a regional average looks ordinary.", punch: "I found a stick. The investigation is now extremely serious." },
     elephant: { name: "Motu", sound: "Prrrrooot", habit: "I remember every rainfall chart and most birthdays.", clue: "One wet year is not a trend. The long record shows the direction more clearly.", punch: "I never forget. Except why I walked over here." },
     fish: { name: "Bubbles", sound: "Blub blub", habit: "I live below the chart axis.", clue: "The sea can warm even when the surface still looks calm.", punch: "Water is not wet from in here. Please update your notes." },
     fox: { name: "Saffron", sound: "Yip", habit: "I know shortcuts that are legally just longcuts.", clue: "A station is useful only when someone maintains it and keeps its record going.", punch: "That path was definitely always there." },
@@ -108,12 +108,12 @@ export function createStoryContent({ THREE, DATA, CLIMATE, WATER_STORY, linearSl
     parrot: { name: "Radio", sound: "Climate bulletin! Climate bulletin!", habit: "I repeat only the most important rumours.", clue: "The ocean shares a direction. Rainfall refuses one regional answer.", punch: "This bulletin will repeat in three, two, three, two..." },
     penguin: { name: "Chilly Bin", sound: "Honk", habit: "I operate the village's least successful ice shop.", clue: "A warmer ocean affects places far beyond the warmest islands.", punch: "Today's special is room-temperature snow." },
     pig: { name: "Taro", sound: "Oink", habit: "I guard the garden by taste-testing it.", clue: "Taro patches and other gardens depend on local water conditions.", punch: "The missing lunch is an unresolved statistical anomaly." },
-    polar: { name: "Snowcone", sound: "Huff huff", habit: "I booked a tropical holiday and committed to the outfit.", clue: "Climate connections cross enormous distances, even when experiences differ.", punch: "I asked for extra ice. The ocean said no." },
-    tiger: { name: "Stripey", sound: "Rrrrow", habit: "I count trends. Stripes are still beyond my sample size.", clue: "A consistent direction across territories is stronger evidence than one isolated series.", punch: "My confidence interval is approximately this many paws wide." },
+    polar: { name: "Snowcone", sound: "Huff huff", habit: "I booked a tropical holiday and committed to the outfit.", clue: "The ocean signal connects distant territories, while each island still depends on its own freshwater supply.", punch: "I asked for extra ice. The ocean said no." },
+    tiger: { name: "Stripey", sound: "Rrrrow", habit: "I count trends. Stripes are still beyond my sample size.", clue: "Every observed ocean-temperature and sea-level trend points upward, even though the rates differ.", punch: "My confidence interval is approximately this many paws wide." },
   };
   
   const ANIMAL_MALIA_LINES = {
-    beaver: ["A bridge inspector with snack priorities. Sensible.", "What do you watch beside the bridge?", "That water mark belongs in my rain notes.", "Any advice that survived the clipboard?", "I will bring the next report on a less edible surface."],
+    beaver: ["A bridge inspector with snack priorities. Sensible.", "What do you watch beside the bridge?", "That water mark belongs in my rain notes.", "Any advice that survived the clipboard?", "I will bring the report on a less edible surface."],
     bee: ["Your flight schedule looks busier than the harbour.", "What can your flower route tell us?", "A local observation is useful, but I still need a comparable record.", "How does a passenger earn five flowers?", "I will leave a glowing review and keep my distance from the runway."],
     bunny: ["The carrot is clearly chairing this interview.", "What have you noticed in the gardens?", "Different rainfall directions mean different watering decisions.", "Does the carrot model have one final result?", "Crunch resolution sounds expensive, but memorable."],
     cat: ["Mr. Miso, your supervision appears mostly horizontal.", "What makes a water bowl reliable?", "Safe, close and available are different from simply being surrounded by water.", "May I quote the chair supervisor?", "Meeting noted. Important object sitting may resume."],
@@ -122,7 +122,7 @@ export function createStoryContent({ THREE, DATA, CLIMATE, WATER_STORY, linearSl
     cow: ["That patch is impressively well managed, Mabel.", "Where does the best grass remain green?", "Grazing conditions give the rainfall discussion a practical edge.", "Did the goat reviewers approve?", "No goats, unanimous review. Convenient."],
     crab: ["Sideways certainly makes the entrance more distinctive.", "What do you watch along the beach?", "A narrowing dry strip makes the waterline trend easier to picture.", "Will you demonstrate the straight walk?", "Brand protected. Demonstration cancelled."],
     deer: ["I will respect the quiet path and ask no flower questions.", "What happens to rain on the planted ground?", "Slower runoff and better infiltration belong in the freshwater notes.", "Anything else from the forbidden-flower district?", "Your hibiscus alibi is now extremely suspicious."],
-    dog: ["Excellent patrol work. The path remains captured.", "What do people notice before opening a chart?", "Local observations can tell me where to look more closely.", "Any breakthrough in the investigation?", "A stick changes everything. Proceed carefully."],
+    dog: ["Excellent patrol work. The path remains captured.", "What do people notice before opening a water chart?", "A low tank or dry stream can reveal a local water problem that a regional average hides.", "Any breakthrough in the investigation?", "A stick changes everything. Proceed carefully."],
     elephant: ["Rainfall charts and birthdays is a formidable archive.", "Why do you keep the long record?", "One loud year should not speak for the full line.", "What was the final thing you remembered?", "We can return to it after you remember why you came."],
     fish: ["Below the axis is an unusual research address.", "What does a calm surface hide?", "Appearance and the measured temperature line can tell different stories.", "Any correction for my field notes?", "I have amended the philosophical status of wetness."],
     fox: ["A longcut with confidence is still a useful tour.", "What keeps a weather record useful?", "Maintenance and continuity matter as much as placing the instrument.", "Was that path truly always there?", "I see. The map must have moved."],
@@ -131,12 +131,12 @@ export function createStoryContent({ THREE, DATA, CLIMATE, WATER_STORY, linearSl
     koala: ["Renewable rest may be the village's best funded programme.", "What makes a water service reliable?", "Available when needed is part of safely managed access, not an optional extra.", "Can I have one final sentence?", "I will return after the eight-hour review window."],
     lion: ["The fountain has found its official portrait artist.", "What can the fountain tell us?", "It can prompt a question, but a maintained station gives us a record we can compare.", "How much rehearsal does majesty require?", "The pose is convincing. The rehearsal remains classified."],
     monkey: ["Rigorous sampling seems to have removed most of the fruit.", "What do the food trees need most?", "Freshwater supports the harvest, and roots help keep rain in the ground.", "How many mangoes finish the survey?", "Six. A remarkably delicious sample size."],
-    panda: ["Eating through meetings may improve their average length.", "What should I remember about the water percentage?", "It measures people with safely managed service, not the water surrounding an island.", "Any final nuance before the next snack?", "Nuance recorded with appropriate crumbs."],
+    panda: ["Eating through meetings may improve their average length.", "What should I remember about the water percentage?", "It measures people with safely managed service, not the water surrounding an island.", "Any final nuance before another snack?", "Nuance recorded with appropriate crumbs."],
     parrot: ["Your bulletin has excellent volume and no off switch.", "What is the headline in one sentence?", "One ocean direction meets many different freshwater conditions.", "Will this bulletin now conclude?", "Apparently the countdown is also on repeat."],
     penguin: ["A tropical ice shop is brave market positioning.", "What does the ocean record mean beyond this beach?", "The ocean pattern connects distant territories without making them identical.", "What is today's coldest item?", "Room-temperature snow explains the empty queue."],
     pig: ["Taste-testing is an ambitious definition of guarding.", "What do the garden beds need from the weather?", "Local water conditions turn rainfall direction into a practical question.", "Any progress on the missing lunch?", "I will mark the case unresolved and wipe the crumbs from the file."],
-    polar: ["The outfit commits fully to the tropical holiday.", "What connects this island with faraway places?", "Distance does not erase the shared physical signals or the local differences.", "Did the extra ice ever arrive?", "Request denied by the ocean. Complaint noted."],
-    tiger: ["Counting stripes may require a larger research grant.", "What makes a regional pattern persuasive?", "Agreement across many territory records matters more than one dramatic line.", "How wide is that confidence interval again?", "Approximately four paws. Very technical."],
+    polar: ["The outfit commits fully to the tropical holiday.", "What connects this island with faraway places?", "The ocean signal is shared across distance, but freshwater supply still has to be understood island by island.", "Did the extra ice ever arrive?", "Request denied by the ocean. Complaint noted."],
+    tiger: ["Counting stripes may require a larger research grant.", "What makes the ocean warning persuasive?", "Every observed ocean-temperature and sea-level trend points upward, even though the rates differ.", "How wide is that confidence interval again?", "Approximately four paws. Very technical."],
   };
   
   const TOWN_PROFILES = {
@@ -159,22 +159,22 @@ export function createStoryContent({ THREE, DATA, CLIMATE, WATER_STORY, linearSl
       "The percentage needs household experience beside it.",
     ], final: "Read water access beside reliability, distance and health." },
     "character-female-f": { name: "Lea Talanoa", role: "community reporter", lines: [
-      ["A bright jacket helps people find the reporter they meant to avoid.", "My first question is always whether one unusual year is shouting over the full record."],
-      ["A blank is not zero.", "It is an unanswered question, and an honest chart leaves it blank."],
-      ["Write the clearest conclusion the numbers support.", "Then stop. Extra certainty only makes the sentence louder, not better."],
+      ["A bright jacket helps people find the reporter they meant to avoid.", "My first question is whether one unusual rainfall year is shouting over the full water record."],
+      ["A blank water record is not zero.", "It is an unanswered question, and an honest chart leaves it blank."],
+      ["Write the clearest freshwater conclusion the numbers support.", "The ocean warning is shared, but rain, access and observation have to stay local."],
     ], responses: [
-      "A reporter should distrust the loudest year.",
-      "An honest gap is better than a false zero.",
-      "A strong ending also needs restraint.",
+      "One wet year should not speak for the rainfall record.",
+      "An honest water-data gap is better than a false zero.",
+      "The freshwater conclusion needs both the shared warning and local differences.",
     ], final: "If the data leaves a gap, leave the gap." },
     "character-male-b": { name: "Kele Vaka", role: "canoe builder", lines: [
       ["A canoe reads wind, current and weight at once.", "The freshwater investigation also needs several signals without pretending they are the same measure."],
       ["I mark the waterline on the posts every season.", "Even a small yearly rate matters when homes and roads sit close to the shore."],
-      ["Good work survives rough water.", "Keep the interaction simple enough that the evidence stays visible."],
+      ["Good work survives rough water.", "Keep ocean pressure and freshwater conditions separate enough to read honestly."],
     ], responses: [
       "Different signals can point toward one larger problem.",
       "A few millimetres each year matter beside homes and roads.",
-      "The design should never bury the evidence.",
+      "The ocean and freshwater records should support each other without being blended.",
     ], final: "Keep the signals separate, then explain what they mean together." },
     "character-male-d": { name: "Maxim Margin", role: "resort development executive", lines: [
       ["Wonderful news: the wet path is now a premium waterfront experience.", "The repair bill is an externality, which is finance for someone else's problem."],
@@ -186,14 +186,14 @@ export function createStoryContent({ THREE, DATA, CLIMATE, WATER_STORY, linearSl
       "A private pool is not public freshwater security.",
     ], final: "Do look around, Malia. I am told the coastal trees have filed another objection." },
     "character-male-f": { name: "Timo Vai", role: "water systems caretaker", lines: [
-      ["The fountain is the village meeting point and my loudest colleague.", "Shared spaces make information easier to exchange."],
+      ["The fountain is the village meeting point and my loudest colleague.", "It also reminds everyone that a visible water feature is not proof of a reliable drinking-water service."],
       ["Water systems need maintenance before a crisis.", "Preparedness is less dramatic than repair, which is exactly the point."],
       ["If the fountain starts giving statistical advice, turn the blue valve.", "The red valve makes it invent one regional rainfall answer."],
     ], responses: [
-      "So the fountain is infrastructure and a noticeboard.",
+      "So the fountain cannot stand in for reliable household water.",
       "Maintenance before failure. That is the useful lesson.",
       "I am writing down blue valve.",
-    ], final: "Check the water systems before the next crisis, not during it." },
+    ], final: "Check the water systems before a crisis, not during it." },
   };
   
   const TOWN_CHARACTER_ASSETS = [

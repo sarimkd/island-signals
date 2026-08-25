@@ -22,10 +22,20 @@ export function createInputController({
   showLayer,
   resize,
 }) {
+  let eHoldTimer = 0;
+  let eHoldTriggered = false;
+  let eHoldStartedAt = 0;
+  let eShortAction = "interact";
+
+  const clearEHoldTimer = () => {
+    window.clearTimeout(eHoldTimer);
+    eHoldTimer = 0;
+  };
+
   window.addEventListener("keydown", (event) => {
     const key = event.key.toLowerCase();
     if (["arrowup", "arrowdown", "arrowleft", "arrowright", " "].includes(key)) event.preventDefault();
-    if (dialogueController.isActive() && ["enter", " ", "e"].includes(key)) {
+    if (dialogueController.isActive() && ["enter", " "].includes(key)) {
       event.preventDefault();
       advanceDialogue();
       return;
@@ -40,11 +50,26 @@ export function createInputController({
     }
     if (key === "e" && dom.atlas.classList.contains("is-visible") && !notebook.isUnlocked("conclusion")) {
       event.preventDefault();
+      eHoldTriggered = true;
       startRevealHold();
       return;
     }
     if (key === "e") {
-      interactWithNearest();
+      const dialogueWasActive = dialogueController.isActive();
+      if (event.repeat || (!dialogueWasActive && (overlayOpen() || !isWorldStarted()))) return;
+      event.preventDefault();
+      eHoldTriggered = false;
+      eShortAction = dialogueWasActive ? "dialogue" : "interact";
+      eHoldStartedAt = performance.now();
+      clearEHoldTimer();
+      eHoldTimer = window.setTimeout(() => {
+        eHoldTimer = 0;
+        eHoldTriggered = true;
+        dom.analysisShortcut.hidden = true;
+        if (dialogueController.isActive()) closeDialogue(false);
+        openAtlas(notebookController.getSelectedStation() === "conclusion" ? "ocean" : notebookController.getSelectedStation());
+        startRevealHold(eHoldStartedAt);
+      }, 420);
       return;
     }
     if (key === "n") {
@@ -63,9 +88,16 @@ export function createInputController({
   window.addEventListener("keyup", (event) => {
     const key = event.key.toLowerCase();
     keyState.delete(key);
-    if (key === "e") resetRevealHold();
+    if (key === "e") {
+      const shouldInteract = Boolean(eHoldTimer) && !eHoldTriggered;
+      clearEHoldTimer();
+      resetRevealHold();
+      if (shouldInteract && eShortAction === "dialogue") advanceDialogue();
+      else if (shouldInteract) interactWithNearest();
+      eHoldTriggered = false;
+    }
   });
-  window.addEventListener("blur", () => { keyState.clear(); resetRevealHold(); });
+  window.addEventListener("blur", () => { keyState.clear(); clearEHoldTimer(); resetRevealHold(); eHoldTriggered = false; });
   window.addEventListener("resize", resize);
 
   let cameraDragging = false;
@@ -109,6 +141,7 @@ export function createInputController({
   document.querySelector("#help-close").addEventListener("click", () => showLayer(dom.help, false));
   document.querySelector("#credits-button").addEventListener("click", () => showLayer(dom.credits, true));
   document.querySelector("#credits-close").addEventListener("click", () => showLayer(dom.credits, false));
+  dom.analysisShortcutClose.addEventListener("click", () => { dom.analysisShortcut.hidden = true; });
   document.querySelector("#touch-interact").addEventListener("click", interactWithNearest);
   document.querySelector("#touch-jump").addEventListener("click", startJump);
   dom.interactionPrompt.addEventListener("click", interactWithNearest);
