@@ -406,7 +406,7 @@ export function createNotebookController({
        <p>Rainfall trends split 15 upward and seven downward. Safely managed drinking-water access ranges from 48.11% to 100% in the common 2020 comparison. The 2026 observing record ranges from zero to eight compliant fixed land stations.</p>
        <p>The records do not measure saltwater intrusion, aquifer condition or service reliability, and they do not prove that climate trends caused current access. They do reveal why freshwater cannot be treated as a secondary issue.</p>
        <p class="conclusion-callout">Salt water surrounds every island. Secure freshwater cannot be assumed.</p>
-       <aside class="research-note"><p><strong>Published context:</strong> Research using 1951 to 2023 observations from Tarawa and Kiritimati found ocean warming without a significant long-term annual rainfall trend. ENSO variability remained strong, and severe drought remained a challenge.</p><a href="https://doi.org/10.3390/atmos15060666" target="_blank" rel="noreferrer">White, Falkland and Redfern (2024) ↗</a></aside>`,
+       <aside class="research-note"><p><strong>Related study:</strong> Research using 1951 to 2023 observations from Tarawa and Kiritimati found ocean warming without a significant long-term annual rainfall trend. ENSO variability remained strong, and severe drought remained a challenge.</p><a href="https://doi.org/10.3390/atmos15060666" target="_blank" rel="noreferrer">White, Falkland and Redfern (2024) ↗</a></aside>`,
       `<p class="conclusion-kicker">the evidence chain</p>
        <h3>Four records reveal where the warning changes</h3>
        <dl class="signal-ledger">
@@ -421,8 +421,8 @@ export function createNotebookController({
        <p><strong>Watch the coast:</strong> join sea-level records with groundwater and saltwater-intrusion monitoring. <strong>Know the supply:</strong> use territory-specific rainfall, drought and storage records instead of a regional average.</p>
        <p><strong>Secure access:</strong> protect and extend services that keep drinking water safe, close and available. <strong>Close observation gaps:</strong> maintain the stations, people and data systems needed for warnings and long-term decisions.</p>
        <p>Together, the records support one practical reading: freshwater planning must remain territorial even when the surrounding ocean pressure is regional. This analysis does not rank interventions or attribute current service gaps to climate change.</p>
-       <aside class="research-note"><p><strong>Published context:</strong> Research in Fiji, Vanuatu and Solomon Islands found that sustained rural water safety planning must be adapted to local governance, community management and ways of sharing knowledge.</p><a href="https://doi.org/10.2166/wh.2024.144" target="_blank" rel="noreferrer">Souter et al. (2024) ↗</a></aside>
-       <p class="conclusion-final">The ocean warning is shared. Freshwater security will be won or lost locally.</p>`,
+       <aside class="research-note"><p><strong>Related study:</strong> Research in Fiji, Vanuatu and Solomon Islands found that sustained rural water safety planning must be adapted to local governance, community management and ways of sharing knowledge.</p><a href="https://doi.org/10.2166/wh.2024.144" target="_blank" rel="noreferrer">Souter et al. (2024) ↗</a></aside>
+       <p class="conclusion-final">The ocean signal is shared. The freshwater response has to be local.</p>`,
     ];
     dom.conclusion.innerHTML = `<article class="conclusion-spread">${spreads[page]}</article>`;
     dom.chartNote.textContent = page === 1 ? "Measures are compared by direction and interpretation, not added together." : "";
