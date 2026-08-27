@@ -31,7 +31,7 @@
         <div class="field-progress" aria-live="polite">
           <span class="progress-title">Island Signals</span>
           <b class="progress-topic">One ocean. Unequal freshwater security.</b>
-          <p class="progress-question">What must Pacific islands know to protect freshwater as the ocean warms and rises?</p>
+          <p class="progress-question">Where does freshwater security need attention, from source to safe return?</p>
           <small id="quest-copy">trace pressure, supply, access and observation</small>
           <div class="progress-record-row">
             <strong id="progress-count">0 of 4 records</strong>
@@ -99,7 +99,7 @@
           </div>
           <p class="welcome-kicker">A Pacific freshwater investigation</p>
           <h1 id="welcome-title">Island Signals</h1>
-          <p class="welcome-deck">Pacific islands are surrounded by salt water, but daily life depends on freshwater. Join Malia to investigate a rising ocean, divided rainfall, unequal safe-water access and uneven formal observation.</p>
+          <p class="welcome-deck">Pacific islands are surrounded by salt water, but daily life depends on freshwater. Join Malia to trace the water safety chain: a rising ocean, divided rainfall, safe water at home and what happens after use.</p>
           <div class="welcome-actions">
             <button class="button-main" id="enter-world" type="button">Explore the village</button>
             <button class="button-secondary" id="enter-atlas" type="button">Open the field notebook</button>
@@ -122,7 +122,8 @@
           <p>Built for the Pacific DataViz Challenge by Sarim Khan.</p>
           <p>I chose an explorable village because freshwater security is lived locally. The story follows a shared ocean signal into different rainfall records, unequal safe-water access and an uneven observing network.</p>
           <p>3D models and environment assets are from Kenney asset packs. Data visualizations use the official challenge datasets.</p>
-          <p class="credits-sources">Context: <a href="https://pacificdata.org/dashboard/sdg-6-clean-water-and-sanitation" target="_blank" rel="noreferrer">Pacific Data Hub SDG 6</a> and <a href="https://spc.int/updates/news/media-release/2024/06/pacific-island-atolls-fixed-on-water-security" target="_blank" rel="noreferrer">Pacific Community coastal aquifer work</a>.</p>
+          <p class="credits-sources">Additional dataset: <a href="https://pacificdata.org/data/dataset/sustainable-development-goal-06-clean-water-and-sanitation-df-sdg-06" target="_blank" rel="noreferrer">Pacific Community SDG 6 water and sanitation data</a>, using nine territory reports from 2024 on domestic wastewater safely treated.</p>
+          <p class="credits-sources">Context: <a href="https://spc.int/updates/news/media-release/2024/06/pacific-island-atolls-fixed-on-water-security" target="_blank" rel="noreferrer">Pacific Community coastal aquifer work</a>.</p>
           <p class="credits-sources">Peer-reviewed research: <a href="https://doi.org/10.3390/atmos15060666" target="_blank" rel="noreferrer">White, Falkland and Redfern (2024)</a> and <a href="https://doi.org/10.2166/wh.2024.144" target="_blank" rel="noreferrer">Souter et al. (2024)</a>.</p>
         </article>
       </section>
@@ -293,8 +294,9 @@
         loadChallengeObject("data/processed/territory-data.js", "DATA"),
         loadChallengeObject("data/processed/climate-series.js", "CLIMATE"),
         loadChallengeObject("data/processed/water-story-data.js", "WATER_STORY"),
+        loadChallengeObject("data/processed/wastewater-story-data.js", "WASTEWATER_STORY"),
       ]);
     </script>
-    <script type="module" src="src/main.js?v=water-scope-2"></script>
+    <script type="module" src="src/main.js?v=water-scope-3"></script>
   </body>
 </html>

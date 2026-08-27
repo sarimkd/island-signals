@@ -18,7 +18,7 @@ import { queryAppDom } from "./core/dom.js";
 import { createInputController } from "./core/input-controller.js";
 import { createMusicController } from "./core/music-controller.js";
 
-const [DATA, CLIMATE, WATER_STORY] = await window.PACIFIC_DATA_PROMISE;
+const [DATA, CLIMATE, WATER_STORY, WASTEWATER_STORY] = await window.PACIFIC_DATA_PROMISE;
 
 const dom = queryAppDom();
 createMusicController({ button: document.querySelector("#music-toggle") });
@@ -38,7 +38,7 @@ const {
   TOWN_CHARACTER_ASSETS,
   validateCharacterProfiles,
   METRICS
-} = createStoryContent({ THREE, DATA, CLIMATE, WATER_STORY, linearSlope, signed });
+} = createStoryContent({ THREE, DATA, CLIMATE, WATER_STORY, WASTEWATER_STORY, linearSlope, signed });
 const visited = new Set();
 const keyState = new Set();
 const touchState = new Set();
@@ -213,6 +213,7 @@ notebookController = createNotebookController({
   DATA,
   CLIMATE,
   WATER_STORY,
+  WASTEWATER_STORY,
   renderHorizontalBarChart,
   renderNotebookDetail,
   showLayer,

@@ -1,4 +1,4 @@
-export function createStoryContent({ THREE, DATA, CLIMATE, WATER_STORY, linearSlope, signed }) {
+export function createStoryContent({ THREE, DATA, CLIMATE, WATER_STORY, WASTEWATER_STORY, linearSlope, signed }) {
   const territories = Object.keys(DATA.extra).sort((a, b) => a.localeCompare(b));
   const regions = ["All", "Melanesia", "Micronesia", "Polynesia"];
   const PLAYER_NAME = "Malia";
@@ -40,14 +40,14 @@ export function createStoryContent({ THREE, DATA, CLIMATE, WATER_STORY, linearSl
     },
     {
       id: "water", short: "At home", title: "Safely managed drinking water", kicker: "Water record 3", label: "Water access",
-      guide: "Litia Katoa", role: "water services planner", color: "#3f8f86", position: new THREE.Vector3(10, 0, 13), npc: "guideLife", metrics: ["safeWater"],
+      guide: "Litia Katoa", role: "water services planner", color: "#3f8f86", position: new THREE.Vector3(10, 0, 13), npc: "guideLife", metrics: ["safeWater", "wastewater"],
       greeting: "An island can be surrounded by water while safe freshwater remains out of reach. This is where the human stakes become visible.",
       callout: "the starting line is unequal", lead: "The freshwater safety net is deeply unequal.",
-      explanation: "In the common 2020 comparison, safely managed drinking-water access ranges from 48.11% to 100% across 19 territories. Three are below 70%.",
-      storyRole: "The climate records now meet the service people rely on. Three of the 19 territories in the common 2020 comparison are below 70% access. The data do not attribute that access gap to climate change.",
-      decision: "A freshwater response must protect and extend safe, reliable services while accounting for rainfall, storage, infrastructure and coastal exposure.",
+      explanation: "In the common 2020 comparison, safely managed drinking-water access ranges from 48.11% to 100% across 19 territories. A current SPC SDG 6 measure reports wastewater safely treated for nine territories in 2024, ranging from 7.29% to 79.06%.",
+      storyRole: "Water security has two checks: whether people can use safe water, and whether wastewater is treated after use. The challenge data compare drinking-water access in 2020, while the updated SPC reports show wastewater treatment in 2024. They are different years and different indicators, but together they show why access and water-quality management belong in the same conversation.",
+      decision: "A practical water plan should protect sources, keep drinking-water services safe, and improve wastewater treatment where the local record shows a gap.",
       term: "Safely managed water", definition: "Drinking water from an improved source that is accessible on premises, available when needed and free from contamination.",
-      evidence: { question: "Do territories begin with equal access to safe water?", paragraphs: ["The common 2020 comparison includes 19 territories. Access ranges from 48.11% in Papua New Guinea to 100% in Nauru, with Solomon Islands and Wallis and Futuna also below 70%.", "The annual series show progress in several territories and setbacks in others. Those changes are service conditions, not effects attributed to the climate indicators."], highlights: [["19", "territories in 2020"], ["48.11% to 100%", "access range"], ["3", "territories below 70%"]] },
+      evidence: { question: "What does water security require at both ends of the system?", paragraphs: ["The common 2020 comparison includes 19 territories. Safely managed drinking-water access ranges from 48.11% in Papua New Guinea to 100% in Nauru, with three territories below 70%.", "The updated SPC SDG 6 release adds nine 2024 territory reports on wastewater safely treated. Those values range from 7.29% in Papua New Guinea to 79.06% in American Samoa. The indicators measure different parts of the system and different years, so this is a water-system warning, not a causal comparison or complete Pacific ranking."], highlights: [["19", "territories with 2020 access values"], ["48.11% to 100%", "safe-water access range"], ["7.29% to 79.06%", "nine 2024 treatment reports"]] },
       followUp: [{ speaker: PLAYER_NAME, text: "The shared ocean warning reaches territories with very different freshwater safety nets." }, { speaker: "Litia Katoa", text: "Exactly. A percentage is not abstract when it describes whether water is safe, close and available when needed." }],
     },
     {
@@ -64,7 +64,7 @@ export function createStoryContent({ THREE, DATA, CLIMATE, WATER_STORY, linearSl
     },
   ];
 
-  const CONCLUSION = { id: "conclusion", short: "Conclusion", title: "One ocean. Unequal freshwater security.", kicker: "Conclusion", lead: "Freshwater is the urgent part of the story.", explanation: "A shared warming and rising ocean meets different rainfall records, unequal access to safely managed drinking water and an uneven formal observing network." };
+  const CONCLUSION = { id: "conclusion", short: "Conclusion", title: "Freshwater security has two gates", kicker: "Conclusion", lead: "Freshwater security is a chain, not a single number.", explanation: "A shared warming and rising ocean meets different rainfall records, unequal access to safely managed drinking water, limited wastewater-treatment reports and an uneven formal observing network." };
 
   const GUIDE_MALIA_LINES = {
     ocean: ["Let me compare ocean heat and sea level without combining their units.", "Both measures move upward across every observed territory.", "That is the shared pressure. Now I need to follow the freshwater."],
@@ -291,6 +291,19 @@ export function createStoryContent({ THREE, DATA, CLIMATE, WATER_STORY, linearSl
       detailNote: "The line shows reported annual access. The chapter overview compares every territory represented in 2020.",
       series: (name) => WATER_STORY.safe_water_series[name],
       value: (name) => WATER_STORY.safe_water_2020[name],
+      format: (value) => `${value.toFixed(1)}%`,
+    },
+    wastewater: {
+      label: "Wastewater safely treated",
+      title: "Water security also depends on what leaves the system",
+      subtitle: "Proportion of domestic wastewater safely treated, reported 2024 values",
+      unit: "percent of reported flow",
+      note: "Nine territory reports are shown for 2024. Reporting coverage is limited, so this is a water-quality signal, not a complete Pacific ranking.",
+      color: "#c17b55",
+      detail: "map",
+      detailSubtitle: "Reported domestic wastewater safely treated in 2024",
+      detailNote: "Nine territory reports are available in this extract. Dot size shows the reported percentage, not territory size.",
+      value: (name) => WASTEWATER_STORY.wastewater_2024[name],
       format: (value) => `${value.toFixed(1)}%`,
     },
     stations: {

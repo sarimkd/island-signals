@@ -11,6 +11,7 @@ export function createNotebookController({
   DATA,
   CLIMATE,
   WATER_STORY,
+  WASTEWATER_STORY,
   renderHorizontalBarChart,
   renderNotebookDetail,
   showLayer,
@@ -307,7 +308,9 @@ export function createNotebookController({
         rain: selectedMetric === "rain"
           ? "The bars sit on both sides of zero: 15 fitted trends point upward and seven point downward. This split is lost in a single regional average."
           : "Higher values mean wider annual swings around the long-run rainfall record. They do not mean that a territory is wetter overall.",
-        water: "This is a common 2020 comparison of the population using safely managed drinking-water services. It describes access, not a climate effect.",
+        water: selectedMetric === "safeWater"
+          ? "This is a common 2020 comparison of the population using safely managed drinking-water services. It describes access, not a climate effect."
+          : "This view shows nine territory reports from 2024 on domestic wastewater safely treated. It is a water-quality signal, not a complete Pacific ranking.",
         observations: "These are raw counts of WMO-compliant fixed land stations in 2026. The count does not account for territory size, island dispersion or whether a network is sufficient.",
       };
       const rows = filteredTerritories();
@@ -328,6 +331,7 @@ export function createNotebookController({
   
     const terms = {
       safeWater: ["Safely managed drinking water", "Drinking water from an improved source that is accessible on premises, available when needed and free from priority contamination."],
+      wastewater: ["Wastewater safely treated", "The share of reported domestic wastewater that is treated safely before it returns to the environment. Nine territory reports from 2024 are shown here."],
       stations: ["Compliant fixed land station", "A fixed land climate-observation station counted by the official indicator as complying with World Meteorological Organization standards."],
       rainVariability: ["Annual variability", "The standard deviation of annual rainfall anomalies. A higher value means the annual record swings more widely around its long-run reference."],
     };
@@ -350,7 +354,7 @@ export function createNotebookController({
     if (selectedNotebookPage === 1) {
       renderHorizontalBarChart({ dom, metric, rows, selectedTerritory, onSelect: selectTerritory });
     } else {
-      renderNotebookDetail({ dom, stationId: selectedStation, metric, selectedTerritory, territories: filteredTerritories(), data: DATA, climate: CLIMATE, waterStory: WATER_STORY, onSelect: selectTerritory });
+      renderNotebookDetail({ dom, stationId: selectedStation, metric, selectedTerritory, territories: filteredTerritories(), data: DATA, climate: CLIMATE, waterStory: WATER_STORY, wastewaterStory: WASTEWATER_STORY, onSelect: selectTerritory });
     }
   }
   
@@ -401,28 +405,29 @@ export function createNotebookController({
   function renderConclusion(page = 0) {
     const spreads = [
       `<p class="conclusion-kicker">the answer</p>
-       <h3>Freshwater is the vulnerable link</h3>
+       <h3>Freshwater security has two gates</h3>
        <p>Across every observed territory, sea-surface temperature and sea level trend upward. The water surrounding the islands gives a shared warning, while the freshwater people depend on is far less uniform.</p>
-       <p>Rainfall trends split 15 upward and seven downward. Safely managed drinking-water access ranges from 48.11% to 100% in the common 2020 comparison. The 2026 observing record ranges from zero to eight compliant fixed land stations.</p>
-       <p>The records do not measure saltwater intrusion, aquifer condition or service reliability, and they do not prove that climate trends caused current access. They do reveal why freshwater cannot be treated as a secondary issue.</p>
-       <p class="conclusion-callout">Salt water surrounds every island. Secure freshwater cannot be assumed.</p>
+       <p>Rainfall trends split 15 upward and seven downward. Safely managed drinking-water access ranges from 48.11% to 100% in the common 2020 comparison. The updated SPC series reports wastewater safely treated for nine territories in 2024, ranging from 7.29% to 79.06%.</p>
+       <p>The first gate is safe water entering homes. The second is keeping used water from returning untreated to the environment. These indicators cover different years and different parts of the system, so they should be read together as a checklist, not combined into a score.</p>
+       <p class="conclusion-callout">Freshwater security is not only about finding water. It is about protecting the whole water cycle.</p>
        <aside class="research-note"><p><strong>Related study:</strong> Research using 1951 to 2023 observations from Tarawa and Kiritimati found ocean warming without a significant long-term annual rainfall trend. ENSO variability remained strong, and severe drought remained a challenge.</p><a href="https://doi.org/10.3390/atmos15060666" target="_blank" rel="noreferrer">White, Falkland and Redfern (2024) ↗</a></aside>`,
       `<p class="conclusion-kicker">the evidence chain</p>
-       <h3>Four records reveal where the warning changes</h3>
+       <h3>The records point to a water safety chain</h3>
        <dl class="signal-ledger">
          <div><dt>around us</dt><dd><strong>21 of 21 ocean-temperature and sea-level trends point upward.</strong> The direction is shared across the observed territories.</dd></div>
          <div><dt>from the sky</dt><dd><strong>Rainfall splits 15 upward and 7 downward.</strong> Annual variability also differs.</dd></div>
          <div><dt>at home</dt><dd><strong>Safe-water access spans 48.11% to 100% across 19 territories in 2020.</strong> Three are below 70%.</dd></div>
+         <div><dt>after use</dt><dd><strong>Wastewater treatment spans 7.29% to 79.06% across nine 2024 reports.</strong> Reporting coverage is limited and separate from the 2020 access comparison.</dd></div>
          <div><dt>through the instruments</dt><dd><strong>Compliant station counts span 0 to 8 across 18 territories in 2026.</strong> Five report one or fewer.</dd></div>
        </dl>
-       <p>The most local part of the problem is also the least uniform. The measures remain separate because pressure, supply, access and observation are not interchangeable.</p>`,
+       <p>These are not interchangeable measures and they are not a single score. Together they define a practical watch: pressure at the coast, rainfall and storage, safe service at home, treatment after use, and observations that can show when conditions change.</p>`,
       `<p class="conclusion-kicker">the practical reading</p>
-       <h3>Protect freshwater before pressure becomes crisis</h3>
-       <p><strong>Watch the coast:</strong> join sea-level records with groundwater and saltwater-intrusion monitoring. <strong>Know the supply:</strong> use territory-specific rainfall, drought and storage records instead of a regional average.</p>
-       <p><strong>Secure access:</strong> protect and extend services that keep drinking water safe, close and available. <strong>Close observation gaps:</strong> maintain the stations, people and data systems needed for warnings and long-term decisions.</p>
-       <p>Together, the records support one practical reading: freshwater planning must remain territorial even when the surrounding ocean pressure is regional. This analysis does not rank interventions or attribute current service gaps to climate change.</p>
+       <h3>Use the evidence as a water safety watch</h3>
+       <p><strong>Protect the source:</strong> pair sea-level records with groundwater and saltwater-intrusion checks. <strong>Secure the supply:</strong> use territory-specific rainfall, drought and storage records when sizing reservoirs and preparing for dry periods.</p>
+       <p><strong>Keep water safe at home:</strong> protect and extend services that make drinking water safe, close and available. <strong>Manage the outlet:</strong> treat wastewater before discharge, and publish the local result so the gap can be tracked.</p>
+       <p><strong>Keep watch:</strong> maintain stations and local data systems so each territory can update this chain over time. This is a concrete response supported by the pattern in the records, while the analysis avoids attributing present service conditions to climate trends.</p>
        <aside class="research-note"><p><strong>Related study:</strong> Research in Fiji, Vanuatu and Solomon Islands found that sustained rural water safety planning must be adapted to local governance, community management and ways of sharing knowledge.</p><a href="https://doi.org/10.2166/wh.2024.144" target="_blank" rel="noreferrer">Souter et al. (2024) ↗</a></aside>
-       <p class="conclusion-final">The ocean signal is shared. The freshwater response has to be local.</p>`,
+       <p class="conclusion-final">A shared ocean warning calls for a complete local water-safety plan.</p>`,
     ];
     dom.conclusion.innerHTML = `<article class="conclusion-spread">${spreads[page]}</article>`;
     dom.chartNote.textContent = page === 1 ? "Measures are compared by direction and interpretation, not added together." : "";

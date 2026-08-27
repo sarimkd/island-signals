@@ -26,8 +26,8 @@ function renderMap({ dom, metric, territories, selectedTerritory, coords, onSele
   const y = (lat) => 48 + ((20 - lat) / 52) * 326;
 
   dom.chartTitle.textContent = `Where ${metric.label.toLowerCase()} sits across the Pacific`;
-  dom.chartSubtitle.textContent = "A schematic Pacific-centred map. Dot size shows the fitted value; position is geographic.";
-  dom.chartNote.textContent = "The map is deliberately schematic. Use the labelled values for comparison, not island area.";
+  dom.chartSubtitle.textContent = metric.detailSubtitle || "A schematic Pacific-centred map. Dot size shows the reported value; position is geographic.";
+  dom.chartNote.textContent = metric.detailNote || "The map is deliberately schematic. Use the labelled values for comparison, not island area.";
   dom.chart.replaceChildren();
   dom.chart.setAttribute("viewBox", `0 0 ${width} ${height}`);
   dom.chart.append(sketch.rectangle(35, 28, 750, 360, { seed: 401, stroke: "#6d9eaa", strokeWidth: 1.2, roughness: 1.5, bowing: 1.3, fill: "rgba(104,181,196,.08)", fillStyle: "hachure", hachureGap: 12 }));
