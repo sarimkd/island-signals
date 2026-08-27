@@ -39,7 +39,7 @@ export function createStoryContent({ THREE, DATA, CLIMATE, WATER_STORY, WASTEWAT
       followUp: [{ speaker: PLAYER_NAME, text: "The ocean gives one warning, but rainfall gives twenty-two different freshwater records." }, { speaker: "Officer Noa", text: "And rainfall alone is not security. Find out how many people can use water that is safe and reliably available." }],
     },
     {
-      id: "water", short: "At home", title: "Safely managed drinking water", kicker: "Water record 3", label: "Water access",
+      id: "water", short: "Water chain", title: "Water security has two gates", kicker: "Water record 3", label: "Water security",
       guide: "Litia Katoa", role: "water services planner", color: "#3f8f86", position: new THREE.Vector3(10, 0, 13), npc: "guideLife", metrics: ["safeWater", "wastewater"],
       greeting: "An island can be surrounded by water while safe freshwater remains out of reach. This is where the human stakes become visible.",
       callout: "the starting line is unequal", lead: "The freshwater safety net is deeply unequal.",
@@ -69,7 +69,7 @@ export function createStoryContent({ THREE, DATA, CLIMATE, WATER_STORY, WASTEWAT
   const GUIDE_MALIA_LINES = {
     ocean: ["Let me compare ocean heat and sea level without combining their units.", "Both measures move upward across every observed territory.", "That is the shared pressure. Now I need to follow the freshwater."],
     rain: ["Let me compare direction and annual variability.", "A regional average would erase the differences freshwater planning depends on.", "Rain does not follow one Pacific path. I need to compare that supply with the water people can safely use."],
-    water: ["Show me the common 2020 comparison first.", "The gap is not a technical detail. It describes who can use safe water.", "Freshwater security begins from unequal conditions. Now I need to know how clearly local change can be observed."],
+    water: ["Show me the common 2020 comparison first.", "The gap is not a technical detail. It describes who can use safe water.", "Safe water at home is one gate. Wastewater treatment after use is the other."],
     observations: ["Let me count the formal stations without calling the count a measure of adequacy.", "Five reporting territories have one compliant fixed land station or fewer.", "Now the warning is complete: shared ocean pressure, different rain, unequal access and uneven observation."],
   };
 
@@ -87,8 +87,8 @@ export function createStoryContent({ THREE, DATA, CLIMATE, WATER_STORY, WASTEWAT
   
   const ANIMAL_PROFILES = {
     beaver: { name: "Biscuit", sound: "Chkk chkk", habit: "I inspect every bridge twice. Once for safety, once for snacks.", clue: "The lake edge leaves a new line after heavy rain.", punch: "I would file a report, but I ate the clipboard." },
-    bee: { name: "Aunty Bzz", sound: "Bzzzz", habit: "I run the smallest air-traffic service in town.", clue: "I can notice a dry flower bed, but a station keeps the long record people can compare.", punch: "Please rate your flight. Five flowers preferred." },
-    bunny: { name: "Nibbles", sound: "Sniff sniff", habit: "I count clouds until a carrot interrupts me.", clue: "Some gardens need more watering now, but the rain record differs by island.", punch: "My climate model is mostly carrots. It has excellent crunch resolution." },
+    bee: { name: "Aunty Bzz", sound: "Bzzzz", habit: "I run the smallest flower patrol in town.", clue: "I can notice a dry flower bed, but a station keeps the long record people can compare.", punch: "Please rate your flight. Five flowers preferred." },
+    bunny: { name: "Nibbles", sound: "Sniff sniff", habit: "I count clouds until a carrot interrupts me.", clue: "Some gardens need more watering now, but the rain record differs by island.", punch: "My rain notes are mostly carrot juice. Very hard to read." },
     cat: { name: "Mr. Miso", sound: "Meow meow", habit: "I supervise the village from whichever chair is warmest.", clue: "A full bowl is not the same as water that is safe and available whenever it is needed.", punch: "Meeting adjourned. I must sit on something important." },
     caterpillar: { name: "Captain Wiggle", sound: "Wiggle wiggle", habit: "I measure distance in leaves.", clue: "Leaves show dry conditions quickly, but soil and stored water decide how long plants cope.", punch: "My grand plan is to become dramatically airborne." },
     chick: { name: "Peep", sound: "Peep peep", habit: "I wake up before the rooster and take full credit.", clue: "Tiny animals also need clean water close by. Distance changes what access feels like.", punch: "I am not small. The island is unusually large." },
@@ -105,11 +105,11 @@ export function createStoryContent({ THREE, DATA, CLIMATE, WATER_STORY, WASTEWAT
     lion: { name: "Sunny", sound: "Rrrr", habit: "I practice majestic poses near the fountain.", clue: "A low fountain is a village observation. A maintained station turns weather into a comparable record.", punch: "The mane is natural. The confidence is heavily rehearsed." },
     monkey: { name: "Mango", sound: "Ooh ah", habit: "I test fruit ripeness with rigorous sampling.", clue: "Food trees need freshwater, while their roots help rain enter and remain in the soil.", punch: "One mango is data. Six mangoes are lunch." },
     panda: { name: "Pebble", sound: "Mmph", habit: "I bring calm to meetings by eating through them.", clue: "Safe-water percentages describe people served, not how much water sits around an island.", punch: "I support nuance, especially with snacks." },
-    parrot: { name: "Radio", sound: "Climate bulletin! Climate bulletin!", habit: "I repeat only the most important rumours.", clue: "The ocean shares a direction. Rainfall refuses one regional answer.", punch: "This bulletin will repeat in three, two, three, two..." },
+    parrot: { name: "Radio", sound: "Water bulletin! Water bulletin!", habit: "I repeat only the most important rumours.", clue: "The ocean shares a direction. Rainfall refuses one regional answer.", punch: "This bulletin will repeat in three, two, three, two..." },
     penguin: { name: "Chilly Bin", sound: "Honk", habit: "I operate the village's least successful ice shop.", clue: "A warmer ocean affects places far beyond the warmest islands.", punch: "Today's special is room-temperature snow." },
-    pig: { name: "Taro", sound: "Oink", habit: "I guard the garden by taste-testing it.", clue: "Taro patches and other gardens depend on local water conditions.", punch: "The missing lunch is an unresolved statistical anomaly." },
+    pig: { name: "Taro", sound: "Oink", habit: "I guard the garden by taste-testing it.", clue: "Taro patches and other gardens depend on local water conditions.", punch: "The missing lunch remains a mystery. The crumbs are not helping." },
     polar: { name: "Snowcone", sound: "Huff huff", habit: "I booked a tropical holiday and committed to the outfit.", clue: "The ocean signal connects distant territories, while each island still depends on its own freshwater supply.", punch: "I asked for extra ice. The ocean said no." },
-    tiger: { name: "Stripey", sound: "Rrrrow", habit: "I count trends. Stripes are still beyond my sample size.", clue: "Every observed ocean-temperature and sea-level trend points upward, even though the rates differ.", punch: "My confidence interval is approximately this many paws wide." },
+    tiger: { name: "Stripey", sound: "Rrrrow", habit: "I count trends. Stripes are still beyond my sample size.", clue: "Every observed ocean-temperature and sea-level trend points upward, even though the rates differ.", punch: "My paw-width estimate is not official, but it looks impressive." },
   };
   
   const ANIMAL_MALIA_LINES = {
@@ -136,7 +136,7 @@ export function createStoryContent({ THREE, DATA, CLIMATE, WATER_STORY, WASTEWAT
     penguin: ["A tropical ice shop is brave market positioning.", "What does the ocean record mean beyond this beach?", "The ocean pattern connects distant territories without making them identical.", "What is today's coldest item?", "Room-temperature snow explains the empty queue."],
     pig: ["Taste-testing is an ambitious definition of guarding.", "What do the garden beds need from the weather?", "Local water conditions turn rainfall direction into a practical question.", "Any progress on the missing lunch?", "I will mark the case unresolved and wipe the crumbs from the file."],
     polar: ["The outfit commits fully to the tropical holiday.", "What connects this island with faraway places?", "The ocean signal is shared across distance, but freshwater supply still has to be understood island by island.", "Did the extra ice ever arrive?", "Request denied by the ocean. Complaint noted."],
-    tiger: ["Counting stripes may require a larger research grant.", "What makes the ocean warning persuasive?", "Every observed ocean-temperature and sea-level trend points upward, even though the rates differ.", "How wide is that confidence interval again?", "Approximately four paws. Very technical."],
+    tiger: ["Counting stripes may require a larger research grant.", "What makes the ocean warning persuasive?", "Every observed ocean-temperature and sea-level trend points upward, even though the rates differ.", "How wide is that estimate again?", "Approximately four paws. Very official-looking."],
   };
   
   const TOWN_PROFILES = {

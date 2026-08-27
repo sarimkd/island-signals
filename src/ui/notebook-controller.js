@@ -264,21 +264,21 @@ export function createNotebookController({
       const conclusionLeftPages = [
         {
           label: "the freshwater question",
-          lead: "What must Pacific islands know to protect freshwater as the ocean warms and rises?",
-          copy: "The surrounding ocean gives a shared warning. The freshwater picture is more fragile: rain differs, access is unequal and the formal observing network is uneven.",
-          highlights: [["21 / 21", "ocean trends upward"], ["15 / 7", "rainfall directions"], ["48% to 100%", "safe-water access"]],
+          lead: "Where can the water safety chain break?",
+          copy: "The surrounding ocean gives a shared warning. The freshwater picture is more fragile: rain differs, access is unequal, treatment after use is unevenly reported and the formal observing network is incomplete.",
+          highlights: [["21 / 21", "ocean trends upward"], ["15 / 7", "rainfall directions"], ["7.29% to 79.06%", "2024 treatment reports"]],
         },
         {
           label: "the evidence chain",
-          lead: "Pressure. Supply. Access. Observation.",
-          copy: "Ocean heat and sea level establish the shared pressure. Rainfall describes an uneven source. Drinking-water access reveals unequal starting conditions. Station counts show uneven formal observation.",
-          highlights: [["21 / 21", "both ocean measures"], ["19", "water-access records"], ["18", "station records"]],
+          lead: "Pressure. Supply. Access. Treatment. Observation.",
+          copy: "Ocean heat and sea level establish the shared pressure. Rainfall describes an uneven source. Drinking-water access reveals unequal starting conditions. Wastewater treatment checks what happens after use. Station counts show uneven formal observation.",
+          highlights: [["21 / 21", "both ocean measures"], ["19", "water-access records"], ["9", "2024 treatment reports"]],
         },
         {
           label: "what the evidence supports",
           lead: "Freshwater security is only as strong as its weakest link.",
-          copy: "Protection requires local rainfall evidence, safe and reliable services, storage and groundwater knowledge, and observations that continue long enough to warn people what is changing.",
-          highlights: [["shared", "ocean pressure"], ["unequal", "safe-water access"], ["uneven", "formal observation"]],
+          copy: "Protection requires local rainfall evidence, safe drinking-water services, wastewater treatment, storage and groundwater knowledge, and observations that continue long enough to show what is changing.",
+          highlights: [["shared", "ocean pressure"], ["two gates", "access and treatment"], ["uneven", "formal observation"]],
         },
       ];
       const page = conclusionLeftPages[selectedNotebookPage];

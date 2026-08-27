@@ -608,10 +608,10 @@ function beginWorld() {
     const professor = interactables.find((item) => item.id === "professor-piko");
     window.setTimeout(() => startDialogue(professor, [
       { speaker: "Professor Piko Puddlejump", text: "Malia, Pacific islands are surrounded by salt water, but daily life depends on freshwater. The ocean is warming and rising. We need to know where freshwater security becomes most exposed." },
-      { speaker: PLAYER_NAME, text: "I will follow the freshwater problem from ocean pressure to rain, safe-water access and the records used to prepare." },
-      { speaker: "Professor Piko Puddlejump", text: "Start with Sela's ocean records. Officer Noa has rainfall, Litia has safely managed drinking water and Dr. Afi has the formal observing network." },
+      { speaker: PLAYER_NAME, text: "I will follow the water chain from ocean pressure to rain, safe water at home, treatment after use and the records used to prepare." },
+      { speaker: "Professor Piko Puddlejump", text: "Start with Sela's ocean records. Officer Noa has rainfall, Litia has the water-service and treatment records, and Dr. Afi has the formal observing network." },
       { speaker: "Professor Piko Puddlejump", text: "Keep each measure honest. Safe-water access is a starting condition, not something these climate records prove was caused by warming." },
-      { speaker: PLAYER_NAME, text: "I will return with an answer to one question: what must Pacific islands know to protect freshwater?" },
+      { speaker: PLAYER_NAME, text: "I will return with an answer to one question: where can the water safety chain break?" },
     ], false, () => turnCameraBehindPlayer()), 380);
   }
 }
